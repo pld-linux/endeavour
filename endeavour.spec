@@ -11,7 +11,7 @@ Source0:	http://wolfpack.twu.net/users/wolfpack/%{name}-%{version}.tgz
 # Source-md5:	14a03e7eb47d7434520cd024df695935
 Source1:	http://abram.eu.org/EndeavourII/%{name}-icons.tgz
 # Source-md5:	d527e5211cc2858ccdc6de72cc3f3ff7
-Source2:	mimetypes.ini
+Source2:	%{name}-mimetypes.ini
 Patch0:		%{name}-PLD.patch
 URL:		http://wolfpack.twu.net/Endeavour2/
 BuildRequires:	gtk+-devel
@@ -87,7 +87,7 @@ install lib/libendeavour2.so $RPM_BUILD_ROOT/%{_libdir}/
 install lib/endeavour2-config $RPM_BUILD_ROOT/%{_bindir}/
 
 # mime types by abram@
-install %{SOURCE2} $RPM_BUILD_ROOT/%{_confdir}/
+install %{SOURCE2} $RPM_BUILD_ROOT/%{_confdir}/mimetypes.ini
 
 %clean
 rm -rf $RPM_BUILD_ROOT
