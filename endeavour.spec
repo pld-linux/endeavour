@@ -96,11 +96,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS HACKING INSTALL LICENSE TODO LANGUAGE README
 %attr(755,root,root) %{_bindir}/%{pname}
-%attr(755,root,root) %{_libdirend}/*
+%attr(755,root,root) %{_libdirend}
 %{_mandir}/man1/*
-%{_icons}/*
-%{_help}/*
-%{_confdir}/*
+%dir %{_datadir}/%{pname}
+%{_icons}
+%{_help}
+%{_confdir}
 
 %files libs
 %defattr(644,root,root,755)
@@ -110,4 +111,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc endeavour2/lib/INTERPS
 %attr(755,root,root) %{_bindir}/endeavour2-config
-%{_includedir}/%{pname}/*
+%{_includedir}/%{pname}
