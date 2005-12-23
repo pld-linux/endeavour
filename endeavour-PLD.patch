@@ -1,0 +1,161 @@
+diff -uNr endeavour-2.5.6.orig/endeavour2/config.h endeavour-2.5.6.pld/endeavour2/config.h
+--- endeavour-2.5.6.orig/endeavour2/config.h	2005-10-07 09:01:48.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/config.h	2005-12-14 09:21:25.005740728 +0100
+@@ -343,13 +343,13 @@
+ #endif
+ 
+ #define EDV_DEF_FORMAT_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/format.front"
++ "/format.front"
+ #define EDV_DEF_FSCK_FRONT_PROG		EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/fsck.front"
++ "/fsck.front"
+ #define EDV_DEF_ZIPTOOL_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/ziptool.front"
++ "/ziptool.front"
+ #define EDV_DEF_DOWNLOAD_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/download.front"
++ "/download.front"
+ #define EDV_DEF_MAIL_CLIENT_PROG	"/usr/bin/balsa"
+ 
+ 
+diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavour2/edvcore.c
+--- endeavour-2.5.6.orig/endeavour2/edvcore.c	2005-10-07 09:01:51.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/edvcore.c	2005-12-23 15:27:37.817417472 +0100
+@@ -194,6 +194,11 @@
+ 	    EDV_CFG_PARM_FILE_MIME_TYPES,
+ 	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
+ 	);
++#elif defined(PLD)
++	EDV_SET_S(              
++	    EDV_CFG_PARM_FILE_MIME_TYPES,
++	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
++	);
+ #else
+ 	EDV_SET_S(
+ 	    EDV_CFG_PARM_FILE_MIME_TYPES,
+diff -uNr endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c
+--- endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c	2005-10-07 09:01:45.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c	2005-12-22 14:55:50.856055776 +0100
+@@ -24,7 +24,7 @@
+ 
+ 
+ #define CFLAGS	"\
+--I/usr/lib/endeavour2/include"
++-I/usr/include/endeavour2"
+ 
+ #define LIBS	"\
+ -lendeavour2"
+diff -uNr endeavour-2.5.6.orig/endeavour2/lib/Makefile endeavour-2.5.6.pld/endeavour2/lib/Makefile
+--- endeavour-2.5.6.orig/endeavour2/lib/Makefile	2005-10-07 09:01:45.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/lib/Makefile	2005-12-22 14:25:24.112762968 +0100
+@@ -70,8 +70,8 @@
+ BIN_DIR         = $(PREFIX)/bin
+ LIB_DIR         = $(PREFIX)/lib
+ EDV_ARCH_DIR    = $(PREFIX)/lib/endeavour2
+-EDV_INCLUDE_DIR = $(PREFIX)/lib/endeavour2/include
+-EDV_LIB_DIR     = $(PREFIX)/lib/endeavour2/lib
++EDV_INCLUDE_DIR = $(PREFIX)/include/endeavour2/
++EDV_LIB_DIR     = $(PREFIX)/lib/
+ 
+ 
+ # Compile time information export:
+diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/endeavour2/platforms.ini
+--- endeavour-2.5.6.orig/endeavour2/platforms.ini	2005-10-07 09:02:02.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/platforms.ini	2005-12-23 12:04:27.893567576 +0100
+@@ -285,6 +285,95 @@
+ 			MustExist = Yes
+ 			DependPath = gtk-config
+ 
++# PLD/Linux
++# autor Micha³ Abramowicz <abram at pld-linux.org>
++# 14.12.2005
++Platform = PLD
++	Description = For PLD Linux (http://www.pld-linux.org)
++	PREFIX = /usr
++	CFLAGS = -g -O2 -Wall -DPLD -funroll-loops -fomit-frame-pointer -ffast-math -finline-functions
++	LIBS = -lm
++	LIB_DIR =
++	CC = cc
++	CPP = c++
++	PlatformSearchPathInclude = /usr/include
++	PlatformSearchPathInclude = /usr/X11R6/include
++	PlatformSearchPathLib = /lib
++	PlatformSearchPathLib = /usr/lib
++	PlatformSearchPathLib = /usr/X11R6/lib
++	PlatformSearchPathEtc = /etc
++	PlatformSearchPathBin = /usr/bin
++	PlatformSearchPathBin = /usr/X11R6/bin
++	PlatformSearchPathData = /usr/share/icons
++	PlatformFeature = arch-i386
++		Description = Adds -march=i386 for 486 specific optimizations
++		MustExist = Preferred  
++		FeatureCFLAGS = -march=i386
++		FeatureDepend = i386
++			DependType = Machine
++			MustExist = Yes
++			DependMachine = i386
++	PlatformFeature = arch-i586
++		Description = Adds -march=i586 for Pentium specific optimizations
++		MustExist = Preferred
++		FeatureCFLAGS = -march=i586
++		FeatureDepend = i586
++			DependType = Machine
++			MustExist = Yes
++			DependMachine = i586
++	PlatformFeature = arch-i686
++		Description = Adds -march=i686 for Pentium Pro specific optimizations
++		MustExist = Preferred
++		FeatureCFLAGS = -march=i686
++		FeatureDepend = i686
++			DependType = Machine
++			MustExist = Yes
++			DependMachine = i686
++        PlatformFeature = libgif
++                Description = Uncompressed GIF Library
++                MustExist = Preffered
++                FeatureCFLAGS = -DHAVE_LIBGIF
++                FeatureLIBS = -lgif
++                FeatureDepend = libgif-devel
++                        DependType = Header
++                        MustExist = Yes
++                        DependPath = gif_lib.h
++                        DependGrepString = DGifOpenFileName
++        PlatformFeature = XF86VidMode
++                Description = XF86 Video Mode extension
++                MustExist = Preferred                  
++                FeatureCFLAGS = -DHAVE_XF86_VIDMODE
++                FeatureLIBS = -lXxf86vm
++                FeatureLIB_DIR = -L/usr/X11R6/lib/
++                FeatureDepend = xf86vidmode-lib
++                        DependType = Library
++                        MustExist = Yes
++                        DependPath = libXxf86vm.a
++                        DependGrepString = XF86VidModeQueryExtension
++                FeatureDepend = xf86vidmode-devel
++                        DependType = Header
++                        MustExist = Yes
++                        DependPath = X11/extensions/xf86vmode.h
++                        DependGrepString = XF86VidModeQueryExtension
++	PlatformFeature = Imlib
++		Description = Image library
++		MustExist = Preffered
++		FeatureCFLAGS = `imlib-config --cflags` -DHAVE_IMLIB
++		FeatureLIBS = `imlib-config --libs`
++		FeatureDepend = Imlib-devel
++			DependType = Program
++			MustExist = Yes
++			DependPath = imlib-config
++	PlatformFeature = libgtk
++		Description = GTK+ 1.2.x
++		MustExist = Yes
++		FeatureCFLAGS = `gtk-config --cflags`
++		FeatureLIBS = `gtk-config --libs`
++		FeatureLIB_DIR = -L/usr/X11R6/lib
++		FeatureDepend = gtk-devel
++			DependType = Program
++			MustExist = Yes
++			DependPath = gtk-config
+ 
+ # Debian GNU/Linux
+ #
