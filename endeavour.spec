@@ -14,9 +14,10 @@ Source1:	http://abram.eu.org/EndeavourII/%{name}-icons.tgz
 Source2:	%{name}-mimetypes.ini
 Patch0:		%{name}-PLD.patch
 URL:		http://wolfpack.twu.net/Endeavour2/
-BuildRequires:	gtk+2-devel >= 2.0
+BuildRequires:	gtk+-devel >= 1.2
+#BuildRequires:	gtk+2-devel >= 2.0
 BuildRequires:	imlib-devel
-BuildRequires:	pkgconfig
+#BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_confdir	/etc/%{pname}
