@@ -63,7 +63,7 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/lib/Makefile endeavour-2.5.6.pld/endea
 diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/endeavour2/platforms.ini
 --- endeavour-2.5.6.orig/endeavour2/platforms.ini	2005-10-07 09:02:02.000000000 +0200
 +++ endeavour-2.5.6.pld/endeavour2/platforms.ini	2005-12-23 12:04:27.893567576 +0100
-@@ -285,6 +285,95 @@
+@@ -285,6 +285,90 @@
  			MustExist = Yes
  			DependPath = gtk-config
  
@@ -127,11 +127,6 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/ende
 +                FeatureCFLAGS = -DHAVE_XF86_VIDMODE
 +                FeatureLIBS = -lXxf86vm
 +                FeatureLIB_DIR = -L/usr/X11R6/lib/
-+                FeatureDepend = xf86vidmode-lib
-+                        DependType = Library
-+                        MustExist = Yes
-+                        DependPath = libXxf86vm.a
-+                        DependGrepString = XF86VidModeQueryExtension
 +                FeatureDepend = xf86vidmode-devel
 +                        DependType = Header
 +                        MustExist = Yes
