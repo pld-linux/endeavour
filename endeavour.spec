@@ -14,8 +14,9 @@ Source1:	http://abram.eu.org/EndeavourII/%{name}-icons.tgz
 Source2:	%{name}-mimetypes.ini
 Patch0:		%{name}-PLD.patch
 URL:		http://wolfpack.twu.net/Endeavour2/
-BuildRequires:	gtk+-devel
+BuildRequires:	gtk+2-devel >= 2.0
 BuildRequires:	imlib-devel
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_confdir	/etc/%{pname}
@@ -97,7 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS HACKING INSTALL LICENSE TODO LANGUAGE README
+%doc AUTHORS HACKING TODO LANGUAGE README
 %attr(755,root,root) %{_bindir}/%{pname}
 %attr(755,root,root) %{_libdirend}
 %{_mandir}/man1/*
