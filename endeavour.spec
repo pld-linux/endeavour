@@ -1,7 +1,7 @@
 %define		pname	endeavour2
 
 Summary:	endeavour2 file browser
-Summary(pl):	endeavour2 przegl±darka plików
+Summary(pl):	endeavour2 - przegl±darka plików
 Name:		endeavour
 Version:	2.5.6
 Release:	0.7
@@ -24,10 +24,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_help		%{_datadir}/%{pname}/help
 
 %description
-endeavour file browser
+endeavour file browser.
 
 %description -l pl
-endeavour przegl±darka plików
+endeavour - przegl±darka plików.
 
 %package libs
 Summary:	Endeavour2 library
@@ -44,8 +44,8 @@ Biblioteka Endeavour2.
 Summary:	Header files for endeavour2
 Summary(pl):	Pliki nag³ówkowe endeavour2
 Group:		Development/Libraries
-Requires:	%{name}
-Requires:	%{name}-libs
+Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 Endeavour2 header files.
@@ -68,29 +68,32 @@ rm -rf $RPM_BUILD_ROOT
 install -d \
 	$RPM_BUILD_ROOT{%{_confdir},%{_libdirend},%{_bindir}} \
 	$RPM_BUILD_ROOT{%{_icons},%{_mandir}/man1,%{_help}} \
-	$RPM_BUILD_ROOT/%{_includedir}/%{pname}
+	$RPM_BUILD_ROOT%{_includedir}/%{pname}
 
 # add xpm icons for OO type
-install icons/{ooo_calc.xpm,ooo_impress.xpm,ooo_writer.xpm,sdc.xpm,sdw.xpm} $RPM_BUILD_ROOT/%{_icons}/
+install icons/{ooo_calc.xpm,ooo_impress.xpm,ooo_writer.xpm,sdc.xpm,sdw.xpm} $RPM_BUILD_ROOT%{_icons}
 # instalation from package is ugly so I decide to put files by my self
 cd endeavour2
-install %{pname} $RPM_BUILD_ROOT/%{_bindir}/
-install download.front/download.front $RPM_BUILD_ROOT/%{_libdirend}/
-install fsck.front/fsck.front $RPM_BUILD_ROOT/%{_libdirend}/
-install format.front/format.front $RPM_BUILD_ROOT/%{_libdirend}/
-install images/* $RPM_BUILD_ROOT/%{_icons}/
-install data/help/* $RPM_BUILD_ROOT/%{_help}/
-install endeavour2.1.bz2 $RPM_BUILD_ROOT/%{_mandir}/man1/
+install %{pname} $RPM_BUILD_ROOT%{_bindir}
+install download.front/download.front $RPM_BUILD_ROOT%{_libdirend}
+install fsck.front/fsck.front $RPM_BUILD_ROOT%{_libdirend}
+install format.front/format.front $RPM_BUILD_ROOT%{_libdirend}
+install images/* $RPM_BUILD_ROOT%{_icons}
+install data/help/* $RPM_BUILD_ROOT%{_help}
+install endeavour2.1.bz2 $RPM_BUILD_ROOT%{_mandir}/man1
 # devel
-install lib/*.h $RPM_BUILD_ROOT/%{_includedir}/%{pname}/
-install lib/libendeavour2.so $RPM_BUILD_ROOT/%{_libdir}/
-install lib/endeavour2-config $RPM_BUILD_ROOT/%{_bindir}/
+install lib/*.h $RPM_BUILD_ROOT%{_includedir}/%{pname}
+install lib/libendeavour2.so $RPM_BUILD_ROOT%{_libdir}
+install lib/endeavour2-config $RPM_BUILD_ROOT%{_bindir}
 
 # mime types by abram@
-install %{SOURCE2} $RPM_BUILD_ROOT/%{_confdir}/mimetypes.ini
+install %{SOURCE2} $RPM_BUILD_ROOT%{_confdir}/mimetypes.ini
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
