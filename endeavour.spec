@@ -82,7 +82,7 @@ install fsck.front/fsck.front $RPM_BUILD_ROOT%{_libdirend}
 install format.front/format.front $RPM_BUILD_ROOT%{_libdirend}
 install images/* $RPM_BUILD_ROOT%{_icons}
 install data/help/* $RPM_BUILD_ROOT%{_help}
-install endeavour2.1.bz2 $RPM_BUILD_ROOT%{_mandir}/man1
+bzip2 -dc endeavour2.1.bz2 > $RPM_BUILD_ROOT%{_mandir}/man1/endeavour2.1
 # devel
 install lib/*.h $RPM_BUILD_ROOT%{_includedir}/%{pname}
 install lib/libendeavour2.so $RPM_BUILD_ROOT%{_libdir}
