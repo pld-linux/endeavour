@@ -1,10 +1,13 @@
+# Conditional build:
+%bcond_with	polish	# build with polish translation
+#
 %define		pname	endeavour2
 
 Summary:	endeavour2 file browser
 Summary(pl):	endeavour2 - przegl±darka plików
 Name:		endeavour
 Version:	2.5.6
-Release:	0.7
+Release:	0.8
 License:	GPL
 Group:		X11/Applications
 Source0:	http://wolfpack.twu.net/users/wolfpack/%{name}-%{version}.tgz
@@ -13,6 +16,7 @@ Source1:	http://abram.eu.org/EndeavourII/%{name}-icons.tgz
 # Source-md5:	d527e5211cc2858ccdc6de72cc3f3ff7
 Source2:	%{name}-mimetypes.ini
 Patch0:		%{name}-PLD.patch
+Patch1:		%{name}-PLD-polish.patch
 URL:		http://wolfpack.twu.net/Endeavour2/
 BuildRequires:	gtk+-devel >= 1.2
 #BuildRequires:	gtk+2-devel >= 2.0
@@ -57,7 +61,11 @@ Pliki nag³ówkowe Endeavour2.
 
 %prep
 %setup -q -a1
+%if %{with polish}
+%patch1 -p1
+%else
 %patch0 -p1
+%endif
 
 %build
 ./configure \
