@@ -1,0 +1,2914 @@
+diff -uNr endeavour-2.5.6.orig/endeavour2/archiver.c endeavour-2.5.6.pld/endeavour2/archiver.c
+--- endeavour-2.5.6.orig/endeavour2/archiver.c	2005-10-07 09:01:47.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/archiver.c	2005-12-30 15:53:06.462106750 +0100
+@@ -1363,7 +1363,7 @@
+ 	menu_name = "Extraire Tout...";
+ 	tooltip = "Extraire tous objets de l'archive";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "Rozpakuj wszystko";
++	button_name = "Rozpakuj \n wszystko";
+ 	menu_name = "Rozpakuj wszystko...";
+ 	tooltip = "Rozpakuj wszystkie obiekty z archiwum";
+ #else
+diff -uNr endeavour-2.5.6.orig/endeavour2/browser.c endeavour-2.5.6.pld/endeavour2/browser.c
+--- endeavour-2.5.6.orig/endeavour2/browser.c	2005-10-07 09:01:47.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/browser.c	2005-12-30 15:53:06.470107250 +0100
+@@ -1849,7 +1849,7 @@
+ 	menu_name = "Annuaire";
+ 	tooltip = "Créer un nouvel objet d'annuaire";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "Nowy katalog";
++	button_name = "Nowy \n katalog";
+ 	menu_name = "Katalog";
+ 	tooltip = "Stwórz nowy katalog";
+ #else
+@@ -1875,8 +1875,8 @@
+ 	menu_name = "Lien";
+ 	tooltip = "Crée un nouveau symbolique lien";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "Nowy odno¶nik";
+-	menu_name = "Odno¶nik";
++	button_name = "Nowy skrót";
++	menu_name = "Skrót";
+ 	tooltip = "Stwórz nowy odno¶nik symboliczny";
+ #else
+ 	button_name = "New Lnk";
+@@ -2208,7 +2208,7 @@
+ 	menu_name = "Renommer";
+ 	tooltip = "Renomme l'objet choisi";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "Zmieñ nazwê";
++	button_name = "Zmieñ \n nazwê";
+ 	menu_name = "Zmieñ nazwê";
+ 	tooltip = "Zmieñ nazwê zaznaczonego (zaznaczonych) obiektu (obiektów)";
+ #else
+@@ -2312,7 +2312,7 @@
+ 	menu_name = "Les Propriétés";
+ 	tooltip = "Modifier a choisi les propriétés de l'objet";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "W³a¶ciwo¶ci";
++	button_name = "W³a¶ciwo \n ¶ci";
+ 	menu_name = "W³a¶ciwo¶ci...";
+ 	tooltip = "Modyfikuj w³a¶ciwo¶ci zaznaczonego obiektu";
+ #else
+@@ -2527,7 +2527,7 @@
+ 	menu_name = "Aller Au Parent";
+ 	tooltip = "Aller à l'annuaire de parent";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "Nadrzêdny";
++	button_name = "W górê";
+ 	menu_name = "Id¼ do nadrzêdnego";
+ 	tooltip = "Id¼ do katalogu nadrzêdnego";
+ #else
+@@ -2548,6 +2548,10 @@
+ 	button_name = "Accueil";
+ 	menu_name = "Aller à l'accueil";
+ 	tooltip = "Aller au répertoire d'accueil (HOME)";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "Domowy";
++	menu_name = "Wróæ do kat. dom.";
++	tooltip = "Wróæ do katalogu domowego";
+ #else
+ 	button_name = "Home";
+ 	menu_name = "Go To Home";
+@@ -2759,6 +2763,10 @@
+ 	button_name = "TreeOrig";
+ 	menu_name = "Répertoire Initial...";
+ 	tooltip = "Positionner au répertoire initial";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "TreeOrig";
++	menu_name = "Directory Tree Origin...";
++	tooltip = "Ustaw katalog sk±d ma zaczynaæ siê drzewko";
+ #else
+ 	button_name = "TreeOrig";
+ 	menu_name = "Directory Tree Origin...";
+@@ -2967,7 +2975,7 @@
+ 	menu_name = "Nouveau Browser de Fichier";
+ 	tooltip = "Créer un nouveau browser de fichier";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "PrzeglPlik";
++	button_name = "Przegl±d. \n Plików";
+ 	menu_name = "Nowa przegl±darka plików";
+ 	tooltip = "Utwórz now± przegl±darkê plików";
+ #else
+@@ -2993,7 +3001,7 @@
+ 	menu_name = "Nouveau Browser D'Image";
+ 	tooltip = "Créer un nouveau browser d'image";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "PrzeglObr";
++	button_name = "Przegl±d. \n Obrazków";
+ 	menu_name = "Nowa przegl±darka obrazów";
+ 	tooltip = "Utwórz now± przegl±darkê obrazów";
+ #else
+@@ -3019,7 +3027,7 @@
+ 	menu_name = "Nouveau Archiver";
+ 	tooltip = "Créer un nouveau archiver";
+ #elif defined(PROG_LANGUAGE_POLISH)
+-	button_name = "Archiwizator";
++	button_name = "Archiwa";
+ 	menu_name = "Nowy archiwizator";
+ 	tooltip = "Utwórz nowego archwizatora";
+ #else
+diff -uNr endeavour-2.5.6.orig/endeavour2/config.h endeavour-2.5.6.pld/endeavour2/config.h
+--- endeavour-2.5.6.orig/endeavour2/config.h	2005-10-07 09:01:48.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/config.h	2005-12-30 15:53:52.460981500 +0100
+@@ -11,7 +11,7 @@
+ /*
+  *	Languages (define only one):
+  */
+-#define PROG_LANGUAGE_ENGLISH		1
++/* #define PROG_LANGUAGE_ENGLISH	1 */
+ /* #define PROG_LANGUAGE_SPANISH	2 */
+ /* #define PROG_LANGUAGE_FRENCH		3 */
+ /* *incomplete* #define PROG_LANGUAGE_GERMAN	4 */
+@@ -19,7 +19,7 @@
+ /* *incomplete* #define PROG_LANGUAGE_DUTCH	6 */
+ /* *incomplete* #define PROG_LANGUAGE_NORWEGIAN	7 */
+ /* *incomplete* #define PROG_LANGUAGE_PORTUGUESE	8 */
+-/* #define PROG_LANGUAGE_POLISH		9 */
++#define PROG_LANGUAGE_POLISH		9
+ 
+ 
+ /*
+@@ -343,13 +343,13 @@
+ #endif
+ 
+ #define EDV_DEF_FORMAT_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/format.front"
++ "/format.front"
+ #define EDV_DEF_FSCK_FRONT_PROG		EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/fsck.front"
++ "/fsck.front"
+ #define EDV_DEF_ZIPTOOL_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/ziptool.front"
++ "/ziptool.front"
+ #define EDV_DEF_DOWNLOAD_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
+- "/bin/download.front"
++ "/download.front"
+ #define EDV_DEF_MAIL_CLIENT_PROG	"/usr/bin/balsa"
+ 
+ 
+diff -uNr endeavour-2.5.6.orig/endeavour2/devicesedit.c endeavour-2.5.6.pld/endeavour2/devicesedit.c
+--- endeavour-2.5.6.orig/endeavour2/devicesedit.c	2005-10-07 09:01:49.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/devicesedit.c	2005-12-30 15:53:06.474107500 +0100
+@@ -113,6 +113,8 @@
+ # define EDITWIN_TITLE		"O Artifício"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ # define EDITWIN_TITLE		"Innretning"
++#elif defined(PROG_LANGUAGE_POLISH)
++# define EDITWIN_TITLE		"Urz±dzenie"
+ #else
+ # define EDITWIN_TITLE		"Device"
+ #endif
+@@ -202,6 +204,8 @@
+ "Não Montado"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Ikke Montert"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Od³±czone"
+ #else
+ "Unmounted"
+ #endif
+@@ -223,6 +227,8 @@
+ "Selecionado"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Valgt Ut"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Zaznaczone"
+ #else
+ "Selected"
+ #endif
+@@ -244,6 +250,8 @@
+ "O Padrão"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Standard"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Standardowy"
+ #else
+ "Standard"
+ #endif
+@@ -357,6 +365,10 @@
+ "Utvalgt Ikon",
+ "Utvalgt",
+ "Kanseller",
++#elif defined(PROG_LANGUAGE_POLISH)
++"Wybierz ikonê",
++"Zaznacz",
++"Anuluj",
+ #else
+ "Select Icon",
+ "Select",
+@@ -465,6 +477,13 @@
+ \n\
+ Vær så snill og bekreft at den spesifiserte stien er riktig og at\n\
+ arkivet er et gyldig XPM avbildearkiv\n"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Nie mo¿na otworzyæ pliku ikony:\n\
++\n\
++    %s\n\
++\n\
++Proszê sprawdziæ czy w podanej lokalizacji istnieje\n\
++poprawny plik ikony XPM.\n"
+ #else
+ "Unable to load icon file:\n\
+ \n\
+@@ -491,6 +510,8 @@
+ "Carregue ícone Fracassado"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Last Sviktet Ikon"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Ustwienie ikony - nieudane"
+ #else
+ "Load Icon Failed"
+ #endif
+@@ -1378,6 +1399,8 @@
+ "A Identificação"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Identification"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Identyfikacja"
+ #else
+ "Identification"
+ #endif
+@@ -1409,6 +1432,8 @@
+ "O Nome"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Navn"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Nazwa"
+ #else
+ "Name"
+ #endif
+@@ -1446,6 +1471,9 @@
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Gå inn i navnet av denne innretningen (denne verdien brukt bare for\
+  utstillingsformål)"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Podaj nazwê urz±dzenia (nazwa bêdzie tylko u¿ywana do wy¶wietlania\
++podpowiedzi)"
+ #else
+ "Enter the name of this device (this value will only be used for\
+  display purposes)"
+@@ -1470,6 +1498,8 @@
+ "Caminho Artifício"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Innretnings Sti"
++#elif defined(PROG_LANGUAGE_POLISH)
++"¦cie¿ka do urz±dzenia"
+ #else
+ "Device Path"
+ #endif
+@@ -1500,6 +1530,8 @@
+ "Entre o caminho ao objeto de artifício"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Gå inn i stien til innretnings objektet"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Podaj ¶cie¿kê do urz±dzenia"
+ #else
+ "Enter the path to the device object"
+ #endif
+@@ -1523,6 +1555,8 @@
+ "Monte Caminho"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Monter Sti"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Miejsce zamontowania"
+ #else
+ "Mount Path"
+ #endif
+@@ -1560,6 +1594,8 @@
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Gå inn i stien til katalogobjektet som denne innretningen er montert\
+  på"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Podaj miejsce gdzie ma byæ zamontowane urz±dzenie"
+ #else
+ "Enter the path to the directory object that this device is to\
+  be mounted on"
+@@ -1583,6 +1619,8 @@
+ "Arquivesistema"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Arkiversystem"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Typ systemu plików"
+ #else
+ "Filesystem"
+ #endif
+@@ -1621,6 +1659,8 @@
+ "O Tipo"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Type"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Typ"
+ #else
+ "Type"
+ #endif
+@@ -1668,6 +1708,9 @@
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Velg ut filesystem type av mediene som brukt med denne\
+  innretningen"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Wybierz typ systemu plików, który jest u¿ywany przez to\
++ urz±dzenie"
+ #else
+ "Select the filesystem type of the media used with this device"
+ #endif
+@@ -1695,6 +1738,8 @@
+ "Os Comandos"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Kommandoer"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Polecenia"
+ #else
+ "Commands"
+ #endif
+@@ -1726,6 +1771,8 @@
+ "O Monte"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Fotstykke"
++#elif defined(PROG_LANGUAGE_POLISH)
++"DUPA nie wiem co tu wpisaæ"
+ #else
+ "Mount"
+ #endif
+@@ -1747,6 +1794,10 @@
+ "Enter the command that will be executed to mount\
+  this device (or leave it blank if it is not mountable)"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Podaj polecenie, które bêdzie wykonane w celu pod³±czenia\
++ tego urz±dzenia (lub zostaw puste je¶li jest niepod³±czalne)"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "Entre la orden que será ejecutada al mount este\
+  artefacto (o le sale blanco si no es mountable)"
+@@ -1769,6 +1820,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Unmount:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Od³±czono:",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "El Unmoute:",
+ #endif
+@@ -1793,6 +1847,10 @@
+ 	    "Enter the command that will be executed to unmount\
+  this device (or leave it blank if it is not unmountable)"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Podaj polecenie, które bêdzie wykonane aby\
++ od³±czyæ urz±dzenie (lub zostaw puste je¶li jest nieod³±czalne)"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Entre la orden que será ejecutada al unmount este\
+  artefacto (o le sale blanco si no es unmountable)"
+@@ -1815,6 +1873,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Eject:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Wysuñ:",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Expulse:",
+ #endif
+@@ -1840,6 +1901,11 @@
+  the media from the device (or leave it blank if the device does not\
+  support ejecting)"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Podaj polecenie, które bêdzie wykonane\
++ aby wysun±æ medium z urz±dzenia (lub pozostaw puste je¶li urz±dzenie\
++ nie wspiera wysuwania)"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Entre la orden que será ejecutada a eject los\
+  medios del artefacto (o le sale blanco si el artefacto hace\
+@@ -1865,6 +1931,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Check:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Sprawd¼:",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Cheque:",
+ #endif
+@@ -1890,6 +1959,11 @@
+  file system check program for this device (or leave it blank if\
+  you do not have one)"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Podaj polecenie, które bêdzie wykonane\
++ aby sprawdziæ system plików na urz±dzeniu (lub pozostaw puste je¶li\
++ nie masz takiego)"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Entre la orden que se ejecutará para correr el\
+  programa de cheque de sistema de archivo para este artefacto\
+@@ -1914,6 +1988,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Tools:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Narzêdzia:",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Las Herramientas:",
+ #endif
+@@ -1939,6 +2016,11 @@
+  tools program for this device (or leave it blank if you do not\
+  have one)"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Podaj polecenie, które bêdzie wykonane\
++ aby uruchomiæ program narzêdziowy dla tego urz±dzenia (lub\
++ pozostaw puste je¶li nie masz takiego)"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Entre la orden que se ejecutará para correr el\
+  programa de herramientas para este artefacto (o le sale\
+@@ -1963,6 +2045,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Format:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Formatowanie:",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Formato:",
+ #endif
+@@ -1988,6 +2073,11 @@
+  format program for this device (or leave it blank if you do not\
+  have one)"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Podaj polecenie, które bêdzie wykonane\
++ aby sformatowaæ to urz±dzenie (lub  pozostaw puste je¶li\
++ nie masz takiego)"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "Entre la orden que se ejecutará para correr the el\
+  programa de formato para este artefacto (o le sale\
+@@ -2012,6 +2102,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Options"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Opcje"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Las Opciones"
+ #endif
+@@ -2034,6 +2127,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "No Unmount"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Nie od³±czalne"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Ningún Unmount"
+ #endif
+@@ -2058,6 +2154,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Read Only"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Tylko do odczytu"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Lea Sólo"
+ #endif
+@@ -2081,6 +2180,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Unlisted"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Odznaczone"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Unlisted"
+ #endif
+@@ -2124,6 +2226,8 @@
+ "Os ícones"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Ikoner"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Ikony"
+ #else
+ "Icons"
+ #endif
+@@ -2156,6 +2260,8 @@
+ "Grande"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Stor"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Du¿e"
+ #else
+ "Large"
+ #endif
+@@ -2179,6 +2285,8 @@
+ "Médio"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Middel"
++#elif defined(PROG_LANGUAGE_POLISH)
++"¦rednie"
+ #else
+ "Medium"
+ #endif
+@@ -2202,6 +2310,8 @@
+ "Pequeno"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Liten"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Ma³e"
+ #else
+ "Small"
+ #endif
+@@ -2261,6 +2371,8 @@
+ "Aplique"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Gjeld"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Zastosuj"
+ #else
+ "Apply"
+ #endif
+@@ -2300,6 +2412,8 @@
+ "Cancelamento"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Kanseller"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Anuluj"
+ #else
+ "Cancel"
+ #endif
+@@ -2343,6 +2457,8 @@
+ "Próximo"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Nær"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Anuluj"
+ #else
+ "Close"
+ #endif
+diff -uNr endeavour-2.5.6.orig/endeavour2/download.front/config.h endeavour-2.5.6.pld/endeavour2/download.front/config.h
+--- endeavour-2.5.6.orig/endeavour2/download.front/config.h	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/download.front/config.h	2005-12-30 22:06:07.240818000 +0100
+@@ -93,7 +93,27 @@
+     GUI, consulter le manuel de votre GUI pour les options disponibles.\n\
+ \n"
+ #endif
+-
++#ifdef PROG_LANGUAGE_POLISH
++#define PROG_HELP_MESG  "\
++Usage: download.front <source_url> <target_path> [options] [GUI_options]\n\
++\n\
++    <source_url> specifies the url of the object to download.\n\
++\n\
++    <target_path> specifies the path to the destination object.\n\
++\n\
++    [options] can be any of the following:\n\
++\n\
++        -b, --beep              Beep when download is complete.\n\
++        -c, --confirm           Query user for confirmation before download.\n\
++        -o, --open              Open object (if download was successful).\n\
++        -l, --last              (Re)download last object.\n\
++        --help                  Prints (this) help screen and exits.\n\
++        --version               Prints version information and exits.\n\
++\n\
++    [GUI_options] can be any options standard to your GUI, consult\n\
++    your GUI's manual for available options.\n\
++\n"
++#endif
+ 
+ /* 
+  *	Download programs:
+diff -uNr endeavour-2.5.6.orig/endeavour2/download.front/main.c endeavour-2.5.6.pld/endeavour2/download.front/main.c
+--- endeavour-2.5.6.orig/endeavour2/download.front/main.c	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/download.front/main.c	2005-12-30 22:16:30.419764250 +0100
+@@ -161,6 +161,10 @@
+ "Utvalgt Sti",
+ "Utvalgt",
+ "Kanseller",
++#elif defined(PROG_LANGUAGE_POLISH)
++"Wybierz ¶cie¿kê",
++"Wybierz",
++"Anuluj",
+ #else
+ "Select Path",
+ "Select",
+@@ -351,6 +355,8 @@
+ "O Download"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Downloading"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Pobieranie"
+ #else
+ "Downloading"
+ #endif
+@@ -422,6 +428,14 @@
+ Til:\n\
+ \n\
+     %s\n"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Pobieranie:\n\
++\n\
++    %s (³±czenie...)\n\
++\n\
++Do:\n\
++\n\
++    %s\n"
+ #else
+ "Downloading:\n\
+ \n\
+@@ -455,6 +469,8 @@
+ "Parada"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Stans"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Stop"
+ #else
+ "Stop"
+ #endif
+@@ -562,6 +578,8 @@
+ "permanecer"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "forbliing"
++#elif defined(PROG_LANGUAGE_POLISH)
++"pozosta³o"
+ #else
+ "left"
+ #endif
+@@ -587,6 +605,8 @@
+ "permanecer"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "forbliing"
++#elif defined(PROG_LANGUAGE_POLISH)
++"pozosta³o"
+ #else
+ "left"
+ #endif
+@@ -610,6 +630,8 @@
+ "imóvel"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "stoppet"
++#elif defined(PROG_LANGUAGE_POLISH)
++"wstrzymane"
+ #else
+ "stalled"
+ #endif
+@@ -650,6 +672,8 @@
+ "O Download"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Downloading"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Pobieranie"
+ #else
+ "Downloading"
+ #endif
+@@ -674,6 +698,8 @@
+ "O Download"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Downloading"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Pobieranie"
+ #else
+ "Downloading"
+ #endif
+@@ -744,6 +770,14 @@
+ Til:\n\
+ \n\
+     %s (%s bytes) %s\n"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Pobieranie:\n\
++\n\
++    %s (%s bajtów)\n\
++\n\
++Do:\n\
++\n\
++    %s (%s bajtów) %s\n"
+ #else
+ "Downloading:\n\
+ \n\
+@@ -820,6 +854,14 @@
+ Til:\n\
+ \n\
+     %s (%s bytes)\n"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Pobieranie:\n\
++\n\
++    %s (??? bajtów)\n\
++\n\
++Do:\n\
++\n\
++    %s (%s bajtów)\n"
+ #else
+ "Downloading:\n\
+ \n\
+@@ -965,6 +1007,12 @@
+     %s\n\
+ \n\
+ Objektet finnes ikke eller den fjerne tjeneren responderer ikke.\n"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Nie mo¿na pobraæ:\n\
++\n\
++    %s\n\
++\n\
++Obiekt nie stnieje lub serwer nie odpowiada.\n"
+ #else
+ "Unable to download:\n\
+ \n\
+diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavour2/edvcore.c
+--- endeavour-2.5.6.orig/endeavour2/edvcore.c	2005-10-07 09:01:51.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/edvcore.c	2006-01-02 08:52:03.748160250 +0100
+@@ -194,6 +194,11 @@
+ 	    EDV_CFG_PARM_FILE_MIME_TYPES,
+ 	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
+ 	);
++#elif defined(PLD)
++	EDV_SET_S(
++	    EDV_CFG_PARM_FILE_MIME_TYPES,
++	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
++	);
+ #else
+ 	EDV_SET_S(
+ 	    EDV_CFG_PARM_FILE_MIME_TYPES,
+diff -uNr endeavour-2.5.6.orig/endeavour2/edvop.c endeavour-2.5.6.pld/endeavour2/edvop.c
+--- endeavour-2.5.6.orig/endeavour2/edvop.c	2005-10-07 09:01:49.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/edvop.c	2005-12-30 15:53:06.482108000 +0100
+@@ -897,6 +897,11 @@
+ \n\
+     %s\n",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Nie mo¿na wykonaæ polecenia:\n\
++\n\
++    %s\n",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "Incapaz de ejecutar la orden:\n\
+ \n\
+@@ -919,6 +924,14 @@
+ is specified properly by going to Device->Devices...\n\
+ and edit the device reference.",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Nie mo¿na uruchomiæ programu",
++		    buf,
++"Powsta³ b³±d przy próbie uruchomienia programu\n\
++Proszê sprawdziæ czy program jest poprawnie okre¶lony\n\
++w Urz±dzenia->Urz±dzenia... i sprawdziæ ustawienia\n\
++urz±dzenia.",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "No Puede Correr El Programa",
+ 		    buf,
+@@ -978,6 +991,11 @@
+ \n\
+     %s\n",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Nie mo¿na wykonaæ polecenia:\n\
++\n\
++    %s\n",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "Incapaz de ejecutar la orden:\n\
+ \n\
+@@ -1000,6 +1018,14 @@
+ is specified properly by going to Device->Devices...\n\
+ and edit the device reference.",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Nie mo¿na uruchomiæ programu",
++		    buf,
++"Powsta³ b³±d przy próbie uruchomienia programu\n\
++Proszê sprawdziæ czy program jest poprawnie okre¶lony\n\
++w Urz±dzenia->Urz±dzenia... i sprawdziæ ustawienia\n\
++urz±dzenia.",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "No Puede Correr El Programa",
+ 		    buf,
+@@ -1058,6 +1084,11 @@
+ \n\
+     %s\n",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Nie mo¿na wykonaæ polecenia:\n\
++\n\
++    %s\n",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "Incapaz de ejecutar la orden:\n\
+ \n\
+@@ -1080,6 +1111,14 @@
+ is specified properly by going to Device->Devices...\n\
+ and edit the device reference.",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Nie mo¿na uruchomiæ programu",
++		    buf,
++"Powsta³ b³±d przy próbie uruchomienia programu\n\
++Proszê sprawdziæ czy program jest poprawnie okre¶lony\n\
++w Urz±dzenia->Urz±dzenia... i sprawdziæ ustawienia\n\
++urz±dzenia.",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "No Puede Correr El Programa",
+ 		    buf,
+@@ -2582,6 +2621,10 @@
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Bekreft Klar",
+ "Er de sikker de stryker plasserings historien på alle vinduer?\n",
++#elif defined(PROG_LANGUAGE_POLISH)
++"Potwierd¼ usuniêcie",
++"Czy jeste¶ pewien, ¿e chcesz usun±æ historiê lokalizacji\n\
++z wszystkich okien?\n",
+ #else
+ "Confirm Clear",
+ "Are you sure you want to delete the locations history on\n\
+@@ -2706,6 +2749,9 @@
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Bekreft Klar",
+ "Er De sikker De stryker løphistorien?\n",
++#elif defined(PROG_LANGUAGE_POLISH)
++"Potwierd¼ usuniêcie",
++"Czy jeste¶ pewien ¿e chcesz usun±æ historiê uruchomieñ?\n",
+ #else
+ "Confirm Clear",
+ "Are you sure you want to delete the run history?\n",
+@@ -2946,6 +2992,13 @@
+ To purge all the existing recycled objects, first\n\
+ go to the Recycle Bin and then go to File->Purge All.",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Wielko¶æ kosza jest aktualnie ustawiona na %s bajtów,\n\
++zosta³a przekroczona o %s bajtów i zosta³e¶ o tym poinformowany.\n\
++\n\
++Aby usun±æ ca³± zawarto¶æ kosza, otwórz Kosz a nastêpnie\n\
++wybierz Plik->Usuñ wszystkie.",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "El tamaño del cajón de la recirculación es ahora %s bytes,\n\
+ ha excedido al usuario el tamaño especificado de\n\
+@@ -2972,6 +3025,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 		"Recycle Bin Size Warning",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++		"Ostrze¿enie o zajêto¶ci kosza",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 		"Advertir De Cajón De Recirculación",
+ #endif
+diff -uNr endeavour-2.5.6.orig/endeavour2/format.front/config.h endeavour-2.5.6.pld/endeavour2/format.front/config.h
+--- endeavour-2.5.6.orig/endeavour2/format.front/config.h	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/format.front/config.h	2005-12-30 22:18:32.287380500 +0100
+@@ -80,7 +80,23 @@
+     GUI, consulter le manuel de votre GUI pour les options disponibles.\n\
+ \n"
+ #endif
+-
++#ifdef PROG_LANGUAGE_POLISH
++#define PROG_HELP_MESG  "\
++Usage: format.front [device] [options] [GUI_options]\n\
++\n\
++    [device] specifies the device to select at startup.\n\
++\n\
++    [options] can be any of the following:\n\
++\n\
++        --start                 Start formatting at startup.\n\
++        -s                      Same as --start.\n\
++        --help                  Prints (this) help screen and exits.\n\
++        --version               Prints version information and exits.\n\
++\n\
++    [GUI_options] can be any options standard to your GUI, consult\n\
++    your GUI's manual for available options.\n\
++\n"
++#endif
+ 
+ /*
+  *	Format programs:
+diff -uNr endeavour-2.5.6.orig/endeavour2/format.front/formatcb.c endeavour-2.5.6.pld/endeavour2/format.front/formatcb.c
+--- endeavour-2.5.6.orig/endeavour2/format.front/formatcb.c	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/format.front/formatcb.c	2005-12-30 22:21:00.156621750 +0100
+@@ -576,6 +576,11 @@
+ \n\
+ Vous devez démonté l'appareil avant de pouvoir le formatter.",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Device `%s' is currently mounted.\n\
++\n\
++You must unmount the device before formatting.",
++#endif
+ 		dev->device_path
+ 	    );
+ 	    EDVPlaySoundWarning(fm->ctx);
+@@ -877,6 +882,11 @@
+ \n\
+     %s",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Unable to execute the command:\n\
++\n\
++    %s",
++#endif
+ 		cmd
+ 	    );
+ 	    EDVPlaySoundWarning(fm->ctx);
+@@ -897,6 +907,11 @@
+ 		buf,
+ 		NULL,
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++		"Format Failed",
++		buf,
++		NULL,
++#endif
+ 		CDIALOG_ICON_WARNING,
+ 		CDIALOG_BTNFLAG_OK | CDIALOG_BTNFLAG_HELP,
+ 		CDIALOG_BTNFLAG_OK
+@@ -991,6 +1006,13 @@
+ 
+ 	    NULL,
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Confirm Format",
++"Formatting the media will erase all existing data\n\
++on the media, are you sure you want to continue\n\
++formatting?",
++	    NULL,
++#endif
+ 	    CDIALOG_ICON_WARNING,
+ 	    CDIALOG_BTNFLAG_YES | CDIALOG_BTNFLAG_NO,
+ 	    CDIALOG_BTNFLAG_NO
+diff -uNr endeavour-2.5.6.orig/endeavour2/format.front/formatmanager.c endeavour-2.5.6.pld/endeavour2/format.front/formatmanager.c
+--- endeavour-2.5.6.orig/endeavour2/format.front/formatmanager.c	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/format.front/formatmanager.c	2005-12-30 22:34:24.786908000 +0100
+@@ -406,6 +406,12 @@
+ 	heading[2] = "Répertoire de montage";
+ 	heading[3] = "Système de fichier";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	heading[0] = "Name";
++	heading[1] = "Device Path";
++	heading[2] = "Mount Path";
++	heading[3] = "File System";
++#endif
+ 	fm->devices_clist = w = gtk_clist_new_with_titles(4, heading);
+ 	clist = GTK_CLIST(w);
+ 	gtk_widget_add_events(
+@@ -478,6 +484,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    label = "Démarrer";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    label = "Start";
++#endif
+ 	    accel_key = 0;
+ 	    accel_mods = 0;
+ 	    func_cb = FormatManagerStartCB;
+@@ -494,6 +503,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    label = "Arrêt";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    label = "Stop";
++#endif
+ 	    accel_key = 0;
+ 	    accel_mods = 0;
+ 	    func_cb = FormatManagerStopCB;
+@@ -523,6 +535,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Options"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Options"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent3), w, FALSE, FALSE, 0);
+ 	gtk_frame_set_shadow_type(GTK_FRAME(w), GTK_SHADOW_ETCHED_IN);
+@@ -551,6 +566,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Formattage Rapide"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Quick Format"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent5), w, FALSE, FALSE, 0);
+ 	GUISetWidgetTip(
+@@ -564,6 +582,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Sauter l'étape de formattage et crée seulement le système de fichier"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Check this to skip the format stage and only create the file system"
++#endif
+ 	);
+ 	gtk_widget_show(w);
+ 	gtk_widget_show(w);
+@@ -587,6 +608,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Capacité:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Capacity:",
++#endif
+ 	    "",
+ 	    glist,
+ 	    4,		/* Maximum items */
+@@ -617,6 +641,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Choisir la capacité actuelle du disque"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Select the actual capacity of the drive"
++#endif
+ 	);
+ 
+ 	/* Volume label entry */
+@@ -631,6 +658,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Nom du Volume:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Volume Label:",
++#endif
+ 	    NULL, &entry_rtn
+ 	);
+ 	fm->volume_label_entry = (GtkWidget *)entry_rtn;
+@@ -649,6 +679,10 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Entrer le nom du volume qui sera enregisté sue le support"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Enter the volume label to be placed on the media after format\
++ (up to 11 characters)"
++#endif
+ 	);
+ 
+ 
+@@ -674,6 +708,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Type de Système de fichier:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "File System Type:",
++#endif
+ 	    "",
+ 	    glist,
+ 	    3,		/* Maximum items */
+@@ -704,6 +741,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Choisir le type du système de fichier pour ce support"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Select the type of file system to be created on the media"
++#endif
+ 	);
+ 
+ 
+@@ -718,6 +758,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Bavard"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Verbose"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent5), w, FALSE, FALSE, 0);
+ 	GUISetWidgetTip(
+@@ -731,6 +774,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Donner les messages détaillés pendant le formattage"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Check this display additional detailed messages during format"
++#endif
+ 	);
+ 	gtk_widget_show(w);
+ 	GTK_TOGGLE_BUTTON(w)->active = TRUE;
+@@ -785,6 +831,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Démarrage",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Start",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -805,6 +854,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Démarrage du programme de formattage"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Start formatting the media in the selected device"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+@@ -833,6 +885,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Arrêt",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Stop",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -853,6 +908,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Arrêter la commande de formattage"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Stop the current formatting process"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+@@ -894,6 +952,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Compte-rendu"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Results"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent2), w, TRUE, TRUE, 0);
+ 	gtk_frame_set_shadow_type(GTK_FRAME(w), GTK_SHADOW_ETCHED_IN);
+@@ -979,6 +1040,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Effacer",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Clear",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -999,6 +1063,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Effacer le compte-rendu"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Clear results"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+@@ -1029,6 +1096,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Quitter",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Close",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -1049,6 +1119,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Fermer cette fenêtre"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Close this window"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+diff -uNr endeavour-2.5.6.orig/endeavour2/fsck.front/config.h endeavour-2.5.6.pld/endeavour2/fsck.front/config.h
+--- endeavour-2.5.6.orig/endeavour2/fsck.front/config.h	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/fsck.front/config.h	2005-12-30 21:49:39.475086500 +0100
+@@ -77,6 +77,23 @@
+     GUI, consulter le manuel de votre GUI pour les options disponibles.\n\
+ \n"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++#define PROG_HELP_MESG  "\
++U¿ycie: fsck.front [device] [options] [GUI_options]\n\
++\n\
++    [device] specifies the device to select at startup.\n\
++\n\
++    [options] can be any of the following:\n\
++\n\
++        --start                 Start check at startup.\n\
++        -s                      Same as --start.\n\
++        --help                  Prints (this) help screen and exits.\n\
++        --version               Prints version information and exits.\n\
++\n\
++    [GUI_options] can be any options standard to your GUI, consult\n\
++    your GUI's manual for available options.\n\
++\n"
++#endif
+ 
+ 
+ /*
+diff -uNr endeavour-2.5.6.orig/endeavour2/fsck.front/fsckcb.c endeavour-2.5.6.pld/endeavour2/fsck.front/fsckcb.c
+--- endeavour-2.5.6.orig/endeavour2/fsck.front/fsckcb.c	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/fsck.front/fsckcb.c	2005-12-30 20:37:32.740682500 +0100
+@@ -477,6 +477,10 @@
+ "\"%s\" composant est actuellement monté.\n\
+ \n\
+ Vous devez démonté le composant pour pouvoir faire la vérification.",
++#elif defined(PROG_LANGUAGE_POLISH)
++"\"%s\" Urz±dzenie jest pod³±czone/zamontowane.\n\
++\n\
++Musisz od³±czyæ/odmontowaæ zanim rozpoczniesz sprawdzanie.",
+ #else
+ "Device \"%s\" is currently mounted.\n\
+ \n\
+diff -uNr endeavour-2.5.6.orig/endeavour2/fsck.front/fsckmanager.c endeavour-2.5.6.pld/endeavour2/fsck.front/fsckmanager.c
+--- endeavour-2.5.6.orig/endeavour2/fsck.front/fsckmanager.c	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/fsck.front/fsckmanager.c	2005-12-30 21:20:28.685669000 +0100
+@@ -401,6 +401,12 @@
+ 	heading[2] = "Répertoire de montage";
+ 	heading[3] = "Système de fichier";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	heading[0] = "Nazwa";
++	heading[1] = "Urz±dzenie";
++	heading[2] = "Miejsce pod³±czenia";
++	heading[3] = "System plików";
++#endif
+ 	fm->devices_clist = w = gtk_clist_new_with_titles(4, heading);
+ 	clist = GTK_CLIST(w);
+ 	gtk_widget_add_events(
+@@ -471,6 +477,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    label = "Démarrer";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    label = "Start";
++#endif
+ 	    accel_key = 0;
+ 	    accel_mods = 0;
+ 	    func_cb = FSCKManagerStartCB;
+@@ -487,6 +496,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    label = "Arrêt";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    label = "Stop";
++#endif
+ 	    accel_key = 0;
+ 	    accel_mods = 0;
+ 	    func_cb = FSCKManagerStopCB;
+@@ -516,6 +528,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Options"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Opcje"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent3), w, FALSE, FALSE, 0);
+ 	gtk_frame_set_shadow_type(GTK_FRAME(w), GTK_SHADOW_ETCHED_IN);
+@@ -544,6 +559,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Vérifier Mauvais Blocs"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Sprawd¼ badblocki"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent5), w, FALSE, FALSE, 0);
+ 	GUISetWidgetTip(
+@@ -559,6 +577,9 @@
+ 	    "La vérifications des mauvais blocs augemente le temps de la vérification"
+ 
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Sprawdzanie badblocków (mo¿e wyd³u¿yæ czas sprawdzania)"
++#endif
+ 	);
+ 	gtk_widget_show(w);
+ 	GTK_TOGGLE_BUTTON(w)->active = TRUE;
+@@ -574,6 +595,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Détails"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Gadatliwe"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent5), w, FALSE, FALSE, 0);
+ 	GUISetWidgetTip(
+@@ -587,6 +611,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Plus d'information sur le compte rendu"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Wiêcej szczegó³ów"
++#endif
+ 	);
+ 	gtk_widget_show(w);
+ 	GTK_TOGGLE_BUTTON(w)->active = TRUE;
+@@ -641,6 +668,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Démarrer",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Start",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -661,6 +691,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Démarrer le programme de vérification"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Rozpocznij sprawdzanie wybranego urz±dzenia"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+@@ -689,6 +722,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Arrêt",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Stop",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -709,6 +745,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Arrêter le procédé de vérification en cours"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Zatrzymaj sprawdzanie"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+@@ -750,6 +789,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Résultats"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Wyniki"
++#endif
+ 	);
+ 	gtk_box_pack_start(GTK_BOX(parent2), w, TRUE, TRUE, 0);
+ 	gtk_frame_set_shadow_type(GTK_FRAME(w), GTK_SHADOW_ETCHED_IN);
+@@ -835,6 +877,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Effacer",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Wyczy¶æ",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -855,6 +900,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Effacer le compte-rendu"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Wyczy¶æ wyniki"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+@@ -885,6 +933,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Quitter",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Zamknij",
++#endif
+ 	    NULL
+ 	);
+ 	gtk_widget_set_usize(
+@@ -905,6 +956,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ 	    "Fermer cette fenêtre"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Zamknij okno"
++#endif
+ 	);
+ 	gtk_signal_connect(
+ 	    GTK_OBJECT(w), "clicked",
+diff -uNr endeavour-2.5.6.orig/endeavour2/hedit/config.h endeavour-2.5.6.pld/endeavour2/hedit/config.h
+--- endeavour-2.5.6.orig/endeavour2/hedit/config.h	2005-10-07 09:01:37.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/hedit/config.h	2005-12-30 22:21:51.107806000 +0100
+@@ -74,7 +74,22 @@
+     GUI, consulter le manuel de votre GUI pour les options disponibles.\n\
+ \n"
+ #endif
+-
++#ifdef PROG_LANGUAGE_POLISH
++#define PROG_HELP_MESG  "\
++Usage: hedit <file> [options] [GUI_options]\n\
++\n\
++    <file> specifies the file to edit.\n\
++\n\
++    [options] can be any of the following:\n\
++\n\
++        --address <address>     Go to address position at startup.\n\
++        --help                  Prints (this) help screen and exits.\n\
++        --version               Prints version information and exits.\n\
++\n\
++    [GUI_options] can be any options standard to your GUI, consult\n\
++    your GUI's manual for available options.\n\
++\n"
++#endif
+ 
+ 
+ /*
+diff -uNr endeavour-2.5.6.orig/endeavour2/imbr.c endeavour-2.5.6.pld/endeavour2/imbr.c
+--- endeavour-2.5.6.orig/endeavour2/imbr.c	2005-10-07 09:01:54.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/imbr.c	2005-12-30 15:53:06.510109750 +0100
+@@ -1323,6 +1323,10 @@
+ 	button_name = "Separator";
+ 	menu_name = "Separator";
+ 	tooltip = "Separator";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "Separator";
++	menu_name = "Separator";
++	tooltip = "Separator";
+ #else
+ 	button_name = "Separator";
+ 	menu_name = "Separator";
+@@ -1343,6 +1347,11 @@
+ 	menu_name = "Close";
+ 	tooltip = "Close this window";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zamknij";
++	menu_name = "Zamknij";
++	tooltip = "Zamknij okno";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Cierre";
+ 	menu_name = "Cierre";
+@@ -1367,6 +1376,11 @@
+ 	menu_name = "Exit";
+ 	tooltip = "Close all windows in the application and exit";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Wyjd¼";
++	menu_name = "Wyjd¼";
++	tooltip = "Zamknij wszystkie okna i wyjd¼";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "La Salida";
+ 	menu_name = "La Salida";
+@@ -1392,6 +1406,11 @@
+ 	menu_name = "Sync Disks";
+ 	tooltip = "Flush any pending data transfers to disk";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zsynchronizuj dyski";
++	menu_name = "Zsynchronizuj dyski";
++	tooltip = "Zapisz wszystkie dane z pamiêci CACHE na dysk";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Discos Sincro";
+ 	menu_name = "Discos Sincro";
+@@ -1416,6 +1435,11 @@
+ 	menu_name = "History...";
+ 	tooltip = "History of commands processed by this application";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Historia";
++	menu_name = "Historia...";
++	tooltip = "Historia wszystkich poleceñ wykonanych przez ten program";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Historia";
+ 	menu_name = "La Historia...";
+@@ -1440,6 +1464,11 @@
+ 	menu_name = "Run...";
+ 	tooltip = "Run a program";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Uruchom";
++	menu_name = "Uruchom...";
++	tooltip = "Uruchom program";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Corra";
+ 	menu_name = "Corra...";
+@@ -1464,6 +1493,11 @@
+ 	menu_name = "Terminal";
+ 	tooltip = "Run a terminal";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Terminal";
++	menu_name = "Terminal";
++	tooltip = "Uruchom Terminal";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "La Terminal";
+ 	menu_name = "La Terminal";
+@@ -1488,6 +1522,11 @@
+ 	menu_name = "Write Protect";
+ 	tooltip = "Enable/disable write protect";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zabezpieczenie";
++	menu_name = "Zabezpiecznie przed zapisem";
++	tooltip = "W³±cz/Wy³±cz zabezpieczenie przed zapisem";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Proteja";
+ 	menu_name = "Escriba Proteja";
+@@ -1513,6 +1552,11 @@
+ 	menu_name = "New";
+ 	tooltip = "Create a new object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowy";
++	menu_name = "Nowy";
++	tooltip = "Utwórz nowy obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Nuevo";
+ 	menu_name = "Nuevo";
+@@ -1537,6 +1581,11 @@
+ 	menu_name = "File";
+ 	tooltip = "Create a new file object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowy Plik";
++	menu_name = "Plik";
++	tooltip = "Utwórz nowy plik";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Archivo";
+ 	menu_name = "El Archivo";
+@@ -1561,6 +1610,11 @@
+ 	menu_name = "Directory";
+ 	tooltip = "Create a new directory object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowy Katalog";
++	menu_name = "Katalog";
++	tooltip = "Utwórz nowy katalog";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "La Guía";
+ 	menu_name = "La Guía";
+@@ -1585,6 +1639,11 @@
+ 	menu_name = "Link";
+ 	tooltip = "Create a new symbolic link object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowy Link";
++	menu_name = "Link";
++	tooltip = "Utwórz nowy link symboliczny (skrót)";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Eslabón";
+ 	menu_name = "El Eslabón";
+@@ -1609,6 +1668,11 @@
+ 	menu_name = "FIFO Pipe";
+ 	tooltip = "Create a new FIFO pipe object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowe FIFO";
++	menu_name = "Kolejka FIFO";
++	tooltip = "Utwórz nowe FIFO";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "FIFO";
+ 	menu_name = "FIFO Tubo";
+@@ -1633,6 +1697,11 @@
+ 	menu_name = "Block Device";
+ 	tooltip = "Create a new block (buffered) device node object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowe BDev";
++	menu_name = "Urz±dzenie blokowe";
++	tooltip = "Utwórz nowe urz±dzenie blokowe";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "BArtefacto";
+ 	menu_name = "El Artefacto Del Bloque";
+@@ -1657,6 +1726,11 @@
+ 	menu_name = "Character Device";
+ 	tooltip = "Create a new character (unbuffered) device node object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowe CDev";
++	menu_name = "Urz±dzenie znakowe";
++	tooltip = "Utwórz nowe urz±dzenie znakowe";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "CArtefacto";
+ 	menu_name = "El Artefacto Del Carácter";
+@@ -1681,6 +1755,11 @@
+ 	menu_name = "Socket";
+ 	tooltip = "Create a new socket object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Nowe gniazdo";
++	menu_name = "Gniazdo";
++	tooltip = "Utwórz nowe gniazdo (socket)";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Enchufe";
+ 	menu_name = "El Enchufe";
+@@ -1706,6 +1785,11 @@
+ 	menu_name = "Open";
+ 	tooltip = "Open the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Otwórz";
++	menu_name = "Otwórz";
++	tooltip = "Otwórz wybrany obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Abierto";
+ 	menu_name = "Abierto";
+@@ -1730,6 +1814,11 @@
+ 	menu_name = "Open With...";
+ 	tooltip = "Open the selected object(s) using a specific method";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Otwórz z";
++	menu_name = "Otwóz z...";
++	tooltip = "Otwórz wybrany obiekt urzywaj±c polecenia";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Abra Con";
+ 	menu_name = "Abra Con...";
+@@ -1755,6 +1844,11 @@
+ 	menu_name = "Copy Path";
+ 	tooltip = "Copy the location of the selected object(s) as path(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "CopyPath";
++	menu_name = "Copy Path";
++	tooltip = "Copy the location of the selected object(s) as path(s)";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "CopiSende";
+ 	menu_name = "Copie Sendero";
+@@ -1779,6 +1873,11 @@
+ 	menu_name = "Copy URL";
+ 	tooltip = "Copy the location of the selected object(s) as url(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "CopyURL";
++	menu_name = "Copy URL";
++	tooltip = "Copy the location of the selected object(s) as url(s)";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "CopiURL";
+ 	menu_name = "Copie URL";
+@@ -1822,6 +1921,11 @@
+ 	menu_name = "Move...";
+ 	tooltip = "Move the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Przenie¶";
++	menu_name = "Przenie¶...";
++	tooltip = "Przenie¶ zaznaczony obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Mueva";
+ 	menu_name = "Mueva...";
+@@ -1846,6 +1950,11 @@
+ 	menu_name = "Copy...";
+ 	tooltip = "Copy the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Kopiuj";
++	menu_name = "Kopiuj...";
++	tooltip = "Kopiuj zaznaczony obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Copia";
+ 	menu_name = "La Copia...";
+@@ -1870,6 +1979,11 @@
+ 	menu_name = "Link...";
+ 	tooltip = "Link the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Link";
++	menu_name = "Link...";
++	tooltip = "Link the selected object(s)";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Eslabón";
+ 	menu_name = "El Eslabón...";
+@@ -1894,6 +2008,11 @@
+ 	menu_name = "Rename";
+ 	tooltip = "Rename the selected object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zmieñ";
++	menu_name = "Zmieñ";
++	tooltip = "Zmieñ nazwê wybranego obiektu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Reagrupe";
+ 	menu_name = "Reagrupe";
+@@ -1918,6 +2037,11 @@
+ 	menu_name = "Change Permissions...";
+ 	tooltip = "Change the permissions of the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "ChMod";
++	menu_name = "Zmieñ uprawnienia...";
++	tooltip = "Zmieñ uprawnienia wybranego obiektu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "ChMod";
+ 	menu_name = "Cambie El Modo...";
+@@ -1942,6 +2066,11 @@
+ 	menu_name = "Change Ownership...";
+ 	tooltip = "Change the ownership of the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Chown";
++	menu_name = "Zmieñ w³a¶ciciela...";
++	tooltip = "Zmieñ w³a¶ciciela wybranego obiektu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Chown";
+ 	menu_name = "Change Ownership...";
+@@ -1966,6 +2095,11 @@
+ 	menu_name = "Delete";
+ 	tooltip = "Delete the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Skasuj";
++	menu_name = "Skasuj";
++	tooltip = "Skasuj wybrany obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Borre";
+ 	menu_name = "Borre";
+@@ -1990,6 +2124,11 @@
+ 	menu_name = "Properties...";
+ 	tooltip = "Modify the selected object's properties";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "W³a¶ciwo¶ci";
++	menu_name = "W³a¶ciwo¶ci...";
++	tooltip = "Zmieñ w³a¶ciwo¶ci wybranego obiektu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Props";
+ 	menu_name = "Las Propiedades";
+@@ -2015,6 +2154,11 @@
+ 	menu_name = "Select All";
+ 	tooltip = "Select all objects";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "SellALL";
++	menu_name = "Zaznacz wszystkie";
++	tooltip = "Zaznacz wszustkie obiekty";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "SelAll";
+ 	menu_name = "Escoja Todo";
+@@ -2039,6 +2183,11 @@
+ 	menu_name = "Unselect All";
+ 	tooltip = "Unselect all objects";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "UnSelAll";
++	menu_name = "Odznacz wszystkie";
++	tooltip = "Odznacz wszystkie obiekty";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "UnSelAll";
+ 	menu_name = "Unescoja Todo";
+@@ -2064,6 +2213,12 @@
+ 	tooltip =
+  "Select all unselected objects and unselect all selected objects";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "InvSel";
++	menu_name = "Odwróæ zaznaczenie";
++	tooltip =
++ "Zaznacz odznaczone oraz odznacz zaznaczone obiekty";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "InvSel";
+ 	menu_name = "Invierta Selección";
+@@ -2090,6 +2245,11 @@
+ 	menu_name = "Find...";
+ 	tooltip = "Find object(s) by specific attributes";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Szukaj";
++	menu_name = "Szukaj...";
++	tooltip = "Szukaj wed³ug zaznaczonych kryteriów";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Hallazgo";
+ 	menu_name = "El Hallazgo";
+@@ -2115,6 +2275,11 @@
+ 	menu_name = "Download";
+ 	tooltip = "Download an object";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Pobierz";
++	menu_name = "Pobierz";
++	tooltip = "Pobierz obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Download";
+ 	menu_name = "Download";
+@@ -2140,6 +2305,11 @@
+ 	menu_name = "Refresh";
+ 	tooltip = "Refresh the thumbs list";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Od¶wie¿";
++	menu_name = "Od¶wie¿";
++	tooltip = "Od¶wie¿ listê";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Refresque";
+ 	menu_name = "Refresque";
+@@ -2164,6 +2334,11 @@
+ 	menu_name = "Refresh All";
+ 	tooltip = "Refresh all listings";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Od¶wie¿ wszystko";
++	menu_name = "Od¶wie¿ wszystko";
++	tooltip = "Od¶wie¿ wszystkie listy";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Refresque Todo";
+ 	menu_name = "Refresque Todo";
+@@ -2188,6 +2363,11 @@
+ 	menu_name = "Go To Parent";
+ 	tooltip = "Go to the parent directory";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "W górê";
++	menu_name = "W górê";
++	tooltip = "Id¼ do katalogu nadrzêdnego";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "El Padre";
+ 	menu_name = "Va A Actuar Como Padre";
+@@ -2230,6 +2410,11 @@
+ 	menu_name = "Stop Loading";
+ 	tooltip = "Stop the loading process";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zatrzymaj";
++	menu_name = "Zatrzymaj ³adowanie";
++	tooltip = "Zatrzymaj proces ³adowania";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Parada";
+ 	menu_name = "La Parada Cargando";
+@@ -2254,6 +2439,11 @@
+ 	menu_name = "Continue Loading";
+ 	tooltip = "Continue the loading process";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Kontynuuj";
++	menu_name = "Kontynuuj ³adowanie";
++	tooltip = "Kontynuuj ³adowanie procesu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Continúe";
+ 	menu_name = "Siga Carga";
+@@ -2299,6 +2489,11 @@
+ 	menu_name = "Tool Bar";
+ 	tooltip = "Show/hide tool bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "PasekNarzêdzi";
++	menu_name = "Pasek Narzêdzi";
++	tooltip = "Poka¿/Ukryj pasek narzêdzi";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "ToolBar";
+ 	menu_name = "Tool Bar";
+@@ -2323,6 +2518,11 @@
+ 	menu_name = "Location Bar";
+ 	tooltip = "Show/hide location bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "LocBar";
++	menu_name = "Pasek lokalizacji";
++	tooltip = "Poka¿/Ukryj pasek lokalizacji";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "LocBar";
+ 	menu_name = "Location Bar";
+@@ -2347,6 +2547,11 @@
+ 	menu_name = "Mount Bar";
+ 	tooltip = "Show/hide mount bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "MountBar";
++	menu_name = "Pasek mountowania";
++	tooltip = "Poka¿/Ukryj pasek mountowania";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "MountBar";
+ 	menu_name = "Mount Bar";
+@@ -2371,6 +2576,11 @@
+ 	menu_name = "Find Bar";
+ 	tooltip = "Show/hide find bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "PasekSzukania";
++	menu_name = "Pasek szukania";
++	tooltip = "Poka¿/Ukryj pasek szukania";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "FindBar";
+ 	menu_name = "Find Bar";
+@@ -2395,6 +2605,11 @@
+ 	menu_name = "Status Bar";
+ 	tooltip = "Show/hide status bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "PasekStatusu";
++	menu_name = "Pasek statusu";
++	tooltip = "Poka¿/Ukryj pasek statusu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "StatusBar";
+ 	menu_name = "Status Bar";
+@@ -2419,6 +2634,10 @@
+         button_name = "HidObj";
+         menu_name = "Objets Cachés";
+         tooltip = "Monter/cacher objets cachés(.)";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "UkryteOb";
++	menu_name = "Ukryte obiekty";
++	tooltip = "Poka¿/Ukryj ukryte obiekty";
+ #else
+         button_name = "HidObj";
+         menu_name = "Hidden Objects";
+@@ -2437,6 +2656,10 @@
+         button_name = "NoAccObj";
+         menu_name = "Objet à accès réservé";
+         tooltip = "Monter/cacher les objets à accès réservé";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "NoAccObj";
++	menu_name = "Brak dostêpu do obiektu";
++	tooltip = "Poka¿/Ukryj obiekty z brakiem dostêpu";
+ #else
+         button_name = "NoAccObj";
+         menu_name = "No Access Objects";
+@@ -2455,6 +2678,10 @@
+ 	button_name = "NonImgObj";
+ 	menu_name = "Autres qu'Image";
+ 	tooltip = "Monter/cacher les objets non-image";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "NonImgObj";
++	menu_name = "Non-Image Objects";
++	tooltip = "Poka¿/Ukryj obiekty niebêd±ce obrazkami";
+ #else
+ 	button_name = "NonImgObj";
+ 	menu_name = "Non-Image Objects";
+@@ -2475,6 +2702,11 @@
+ 	menu_name = "Mount";
+ 	tooltip = "Mount/unmount selected mount point directory";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Mount";
++	menu_name = "Mount";
++	tooltip = "Pod³±cz/Od³±cz wybrany katalog mountotwania";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Monte";
+ 	menu_name = "El Monte";
+@@ -2499,6 +2731,11 @@
+ 	menu_name = "Eject";
+ 	tooltip = "Eject media from device";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Wysuñ";
++	menu_name = "Wysuñ";
++	tooltip = "Wysuñ no¶nik z urz±dzenia";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Expulse";
+ 	menu_name = "Expulse";
+@@ -2523,6 +2760,11 @@
+ 	menu_name = "File System Check...";
+ 	tooltip = "Check the device's file system";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "FSCK";
++	menu_name = "Sprawdzanie systemu plików...";
++	tooltip = "Sprawd¼ system plików";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "FSCK";
+ 	menu_name = "Archive Cheque De Sistema...";
+@@ -2547,6 +2789,11 @@
+ 	menu_name = "Device Tools...";
+ 	tooltip = "Run the device's tools program";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "DevTool";
++	menu_name = "Device Tools...";
++	tooltip = "Run the device's tools program";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "DevTool";
+ 	menu_name = "Artefacto Equipar Herramienta...";
+@@ -2571,6 +2818,11 @@
+ 	menu_name = "Format Media...";
+ 	tooltip = "Format the media in the device";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Format";
++	menu_name = "Formatuj no¶nik...";
++	tooltip = "Formatuj no¶nik w urz±dzeniu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Format";
+ 	menu_name = "Formatear Medios...";
+@@ -2596,6 +2848,11 @@
+ 	menu_name = "MIME Types...";
+ 	tooltip = "View/modify MIME Types";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "MIMETypes";
++	menu_name = "MIME Types...";
++	tooltip = "Poka¿/Modyfikuj typy MIME";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "MIMETypes";
+ 	menu_name = "MIME Types...";
+@@ -2620,6 +2877,11 @@
+ 	menu_name = "Devices...";
+ 	tooltip = "View/modify file system device references";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Urz±dzenia";
++	menu_name = "Urz±dzenia...";
++	tooltip = "Poka¿/Modyfikuj file system device references";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Artefactos";
+ 	menu_name = "Los Artefactos...";
+@@ -2645,6 +2907,11 @@
+ 	menu_name = "New File Browser";
+ 	tooltip = "Create a new file browser";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "FBrowser";
++	menu_name = "Nowa przegl±darka plików";
++	tooltip = "Otwórz nowe okno przegl±darki plików";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "FBrowser";
+ 	menu_name = "El Examinador Nuevo Del Archivo";
+@@ -2669,6 +2936,11 @@
+ 	menu_name = "New Image Browser";
+ 	tooltip = "Create a new image browser";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "IBrowser";
++	menu_name = "Nowa przegl±darka obrazków";
++	tooltip = "Otwórz nowe okno przegl±darki obrazków";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "IBrowser";
+ 	menu_name = "El Examinador Nuevo De La Imagen";
+@@ -2693,6 +2965,11 @@
+ 	menu_name = "New Archiver";
+ 	tooltip = "Create a new archiver";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Pakowarka";
++	menu_name = "Nowa pakowarka";
++	tooltip = "Otwórz nowe okno pakowarki plików";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Archiver";
+ 	menu_name = "Archiver Nuevo";
+@@ -2717,6 +2994,11 @@
+ 	menu_name = "Recycle Bin";
+ 	tooltip = "Open Recycle Bin";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Kosz";
++	menu_name = "Kosz";
++	tooltip = "Otwórz kosz";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "RecBin";
+ 	menu_name = "El Cajón De La Recirculación";
+@@ -2742,6 +3024,11 @@
+ 	menu_name = "Options...";
+ 	tooltip = "Modify this application's options";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Opcje";
++	menu_name = "Opcje...";
++	tooltip = "Zmieñ opcje programu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Las Opciones";
+ 	menu_name = "Las Opciones...";
+@@ -2766,6 +3053,11 @@
+ 	menu_name = "Customize...";
+ 	tooltip = "Customize the look and feel of this application";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "W³asne";
++	menu_name = "Dostosuj...";
++	tooltip = "Dostosuj wygl±d i zachowanie programu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Personal";
+ 	menu_name = "Personaliza...";
+@@ -2852,6 +3144,10 @@
+ 	button_name = "Aide";
+ 	menu_name = "Corbeille";
+ 	tooltip = "Aide sur l'utilisation de la Corbeille";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "Pomoc";
++	menu_name = "Pomoc kosza";
++	tooltip = "Pomoc w u¿ywaniu kosza";
+ #else
+ 	button_name = "Help";
+ 	menu_name = "Recycle Bin";
+@@ -3213,6 +3509,8 @@
+ "Arquivo"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Arkiv"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Plik"
+ #else
+ "File"
+ #endif
+@@ -3304,6 +3602,8 @@
+ "Edite"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Rediger"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Edycja"
+ #else
+ "Edit"
+ #endif
+@@ -3395,6 +3695,8 @@
+ "Vista"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Sikt"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Podgl±d"
+ #else
+ "View"
+ #endif
+@@ -3450,6 +3752,8 @@
+ "Artifício"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Innretning"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Urz±dzenie"
+ #else
+ "Device"
+ #endif
+@@ -3491,6 +3795,8 @@
+ "Por"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Innstillinger"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Ustawienia"
+ #else
+ "Settings"
+ #endif
+@@ -3536,6 +3842,8 @@
+ "Janelas"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Vinduer"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Okno"
+ #else
+ "Windows"
+ #endif
+@@ -3595,6 +3903,8 @@
+ "Ajuda"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Hjelp"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Pomoc"
+ #else
+ "Help"
+ #endif
+@@ -3899,6 +4209,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ "Drag this to create a link to this location"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Upu¶æ to aby utworzyæ skrót do tej lokalizacji"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ "Arrastre esto crear un eslabón a esta ubicación"
+ #endif
+@@ -3917,6 +4230,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Location:",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Lokalizacja:",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "La Ubicación:",
+ #endif
+diff -uNr endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c
+--- endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c	2005-10-07 09:01:45.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c	2005-12-22 14:55:50.000000000 +0100
+@@ -24,7 +24,7 @@
+ 
+ 
+ #define CFLAGS	"\
+--I/usr/lib/endeavour2/include"
++-I/usr/include/endeavour2"
+ 
+ #define LIBS	"\
+ -lendeavour2"
+diff -uNr endeavour-2.5.6.orig/endeavour2/lib/Makefile endeavour-2.5.6.pld/endeavour2/lib/Makefile
+--- endeavour-2.5.6.orig/endeavour2/lib/Makefile	2005-10-07 09:01:45.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/lib/Makefile	2005-12-22 14:25:24.000000000 +0100
+@@ -70,8 +70,8 @@
+ BIN_DIR         = $(PREFIX)/bin
+ LIB_DIR         = $(PREFIX)/lib
+ EDV_ARCH_DIR    = $(PREFIX)/lib/endeavour2
+-EDV_INCLUDE_DIR = $(PREFIX)/lib/endeavour2/include
+-EDV_LIB_DIR     = $(PREFIX)/lib/endeavour2/lib
++EDV_INCLUDE_DIR = $(PREFIX)/include/endeavour2/
++EDV_LIB_DIR     = $(PREFIX)/lib/
+ 
+ 
+ # Compile time information export:
+diff -uNr endeavour-2.5.6.orig/endeavour2/pdialog.c endeavour-2.5.6.pld/endeavour2/pdialog.c
+--- endeavour-2.5.6.orig/endeavour2/pdialog.c	2005-10-07 09:01:48.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/pdialog.c	2005-12-30 15:53:06.510109750 +0100
+@@ -968,6 +968,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 		"Browse"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++		"Przegl±daj"
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 		"Hojee"
+ #endif
+@@ -1181,6 +1184,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Submit",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Wy¶lij",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Sométase",
+ #endif
+@@ -1234,6 +1240,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Cancel",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Anuluj",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Cancele",
+ #endif
+@@ -1275,6 +1284,9 @@
+ #ifdef PROG_LANGUAGE_ENGLISH
+ 	    "Help",
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	    "Pomoc",
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	    "Ayuda",
+ #endif
+diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/endeavour2/platforms.ini
+--- endeavour-2.5.6.orig/endeavour2/platforms.ini	2005-10-07 09:02:02.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/platforms.ini	2005-12-23 12:04:27.000000000 +0100
+@@ -285,6 +285,95 @@
+ 			MustExist = Yes
+ 			DependPath = gtk-config
+ 
++# PLD/Linux
++# autor Micha³ Abramowicz <abram at pld-linux.org>
++# 14.12.2005
++Platform = PLD
++	Description = For PLD Linux (http://www.pld-linux.org)
++	PREFIX = /usr
++	CFLAGS = -g -O2 -Wall -DPLD -funroll-loops -fomit-frame-pointer -ffast-math -finline-functions
++	LIBS = -lm
++	LIB_DIR =
++	CC = cc
++	CPP = c++
++	PlatformSearchPathInclude = /usr/include
++	PlatformSearchPathInclude = /usr/X11R6/include
++	PlatformSearchPathLib = /lib
++	PlatformSearchPathLib = /usr/lib
++	PlatformSearchPathLib = /usr/X11R6/lib
++	PlatformSearchPathEtc = /etc
++	PlatformSearchPathBin = /usr/bin
++	PlatformSearchPathBin = /usr/X11R6/bin
++	PlatformSearchPathData = /usr/share/icons
++	PlatformFeature = arch-i386
++		Description = Adds -march=i386 for 486 specific optimizations
++		MustExist = Preferred  
++		FeatureCFLAGS = -march=i386
++		FeatureDepend = i386
++			DependType = Machine
++			MustExist = Yes
++			DependMachine = i386
++	PlatformFeature = arch-i586
++		Description = Adds -march=i586 for Pentium specific optimizations
++		MustExist = Preferred
++		FeatureCFLAGS = -march=i586
++		FeatureDepend = i586
++			DependType = Machine
++			MustExist = Yes
++			DependMachine = i586
++	PlatformFeature = arch-i686
++		Description = Adds -march=i686 for Pentium Pro specific optimizations
++		MustExist = Preferred
++		FeatureCFLAGS = -march=i686
++		FeatureDepend = i686
++			DependType = Machine
++			MustExist = Yes
++			DependMachine = i686
++        PlatformFeature = libgif
++                Description = Uncompressed GIF Library
++                MustExist = Preffered
++                FeatureCFLAGS = -DHAVE_LIBGIF
++                FeatureLIBS = -lgif
++                FeatureDepend = libgif-devel
++                        DependType = Header
++                        MustExist = Yes
++                        DependPath = gif_lib.h
++                        DependGrepString = DGifOpenFileName
++        PlatformFeature = XF86VidMode
++                Description = XF86 Video Mode extension
++                MustExist = Preferred                  
++                FeatureCFLAGS = -DHAVE_XF86_VIDMODE
++                FeatureLIBS = -lXxf86vm
++                FeatureLIB_DIR = -L/usr/X11R6/lib/
++                FeatureDepend = xf86vidmode-lib
++                        DependType = Library
++                        MustExist = Yes
++                        DependPath = libXxf86vm.a
++                        DependGrepString = XF86VidModeQueryExtension
++                FeatureDepend = xf86vidmode-devel
++                        DependType = Header
++                        MustExist = Yes
++                        DependPath = X11/extensions/xf86vmode.h
++                        DependGrepString = XF86VidModeQueryExtension
++	PlatformFeature = Imlib
++		Description = Image library
++		MustExist = Preffered
++		FeatureCFLAGS = `imlib-config --cflags` -DHAVE_IMLIB
++		FeatureLIBS = `imlib-config --libs`
++		FeatureDepend = Imlib-devel
++			DependType = Program
++			MustExist = Yes
++			DependPath = imlib-config
++	PlatformFeature = libgtk
++		Description = GTK+ 1.2.x
++		MustExist = Yes
++		FeatureCFLAGS = `gtk-config --cflags`
++		FeatureLIBS = `gtk-config --libs`
++		FeatureLIB_DIR = -L/usr/X11R6/lib
++		FeatureDepend = gtk-devel
++			DependType = Program
++			MustExist = Yes
++			DependPath = gtk-config
+ 
+ # Debian GNU/Linux
+ #
+diff -uNr endeavour-2.5.6.orig/endeavour2/recbin.c endeavour-2.5.6.pld/endeavour2/recbin.c
+--- endeavour-2.5.6.orig/endeavour2/recbin.c	2005-10-07 09:01:56.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/recbin.c	2005-12-30 15:53:06.522110500 +0100
+@@ -684,6 +684,10 @@
+ 	button_name = "Separator";
+ 	menu_name = "Separator";
+ 	tooltip = "Separator";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "Separator";
++	menu_name = "Separator";
++	tooltip = "Separator";
+ #else
+ 	button_name = "Separator";
+ 	menu_name = "Separator";
+@@ -704,6 +708,11 @@
+ 	menu_name = "Close";
+ 	tooltip = "Close this window";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zamknij";
++	menu_name = "Zamknij";
++	tooltip = "Zamknij te okno";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Cierre";
+ 	menu_name = "Cierre";
+@@ -728,6 +737,11 @@
+ 	menu_name = "Exit";
+ 	tooltip = "Close all windows in the application and exit";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Wyjd¼";
++	menu_name = "Wyjd¼";
++	tooltip = "Zamknij wszystkie okna i wyjd¼";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "La Salida";
+ 	menu_name = "La Salida";
+@@ -753,6 +767,11 @@
+ 	menu_name = "Sync Disks";
+ 	tooltip = "Flush any pending data transfers to disk";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Synchronizuj dyski";
++	menu_name = "Synchronizuj dyski";
++	tooltip = "Zapisz wszystkie dane z CACHE na dysk";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Discos Sincro";
+ 	menu_name = "Discos Sincro";
+@@ -777,6 +796,11 @@
+ 	menu_name = "History...";
+ 	tooltip = "History of commands processed by this application";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Historia";
++	menu_name = "Historia...";
++	tooltip = "Historia poleceñ wykonana przez ten program";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Historia";
+ 	menu_name = "La Historia...";
+@@ -801,6 +825,11 @@
+ 	menu_name = "Run...";
+ 	tooltip = "Run a program";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Uruchom";
++	menu_name = "Uruchom...";
++	tooltip = "Uruchom program";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Corra";
+ 	menu_name = "Corra...";
+@@ -825,6 +854,11 @@
+ 	menu_name = "Terminal";
+ 	tooltip = "Run a terminal";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Terminal";
++	menu_name = "Terminal";
++	tooltip = "Uruchom w terminalu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "La Terminal";
+ 	menu_name = "La Terminal";
+@@ -849,6 +883,11 @@
+ 	menu_name = "Write Protect";
+ 	tooltip = "Enable/disable write protect";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zabezpieczenie";
++	menu_name = "Zabezpieczenie przed zapisem";
++	tooltip = "W³±cz/Wy³±cz zabezpieczenie przed zapisem";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Proteja";
+ 	menu_name = "Escriba Proteja";
+@@ -896,6 +935,10 @@
+ 	button_name = "SynRecBin";
+ 	menu_name = "Sync Recycle Bin";
+ 	tooltip = "Compact recycled objects and fix any errors";
++#elif defined(PROG_LANGUAGE_POLISH)
++	button_name = "SynRecBin";
++	menu_name = "Porz±dkuj kosz";
++	tooltip = "Kompaktuj skasowane obiekty i napraw b³êdy je¶li s±";
+ #else
+ 	button_name = "SynRecBin";
+ 	menu_name = "Sync Recycle Bin";
+@@ -916,6 +959,11 @@
+ 	menu_name = "Recover";
+ 	tooltip = "Recover the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Odzyskaj";
++	menu_name = "Odzyskaj";
++	tooltip = "Odzyskaj zaznaczony obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Recupere";
+ 	menu_name = "Recupere";
+@@ -940,6 +988,11 @@
+ 	menu_name = "Purge";
+ 	tooltip = "Permanently discard the selected object(s)";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Skasuj";
++	menu_name = "Skasuj";
++	tooltip = "Skasuj na zawsze zaznaczony obiekt";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Purga";
+ 	menu_name = "Purga";
+@@ -964,6 +1017,11 @@
+ 	menu_name = "Purge All";
+ 	tooltip = "Permanently discard all of the recycled objects";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Skasuj wszystkie";
++	menu_name = "Skasuj wszystkie";
++	tooltip = "Skasuj wszystkie obiekty z kosza";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "PurgTodo";
+ 	menu_name = "Purgue Todo";
+@@ -989,6 +1047,11 @@
+ 	menu_name = "Select All";
+ 	tooltip = "Select all objects";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Zaznacz \n wszystko";
++	menu_name = "Zaznacz wszystkie";
++	tooltip = "Zaznacz wszystkie obiekty";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "SelAll";
+ 	menu_name = "Escoja Todo";
+@@ -1013,6 +1076,11 @@
+ 	menu_name = "Unselect All";
+ 	tooltip = "Unselect all objects";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Odznacz \n wszystkie";
++	menu_name = "Odznacz wszystkie";
++	tooltip = "Odznacz wszystkie elementy";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "UnSelAll";
+ 	menu_name = "Unescoja Todo";
+@@ -1038,6 +1106,12 @@
+ 	tooltip =
+  "Select all unselected objects and unselect all selected objects";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "InvSel";
++	menu_name = "Odwróæ zaznaczenie";
++	tooltip =
++ "Zaznacz odznaczone oraz odznacz zaznaczone obiekty";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "InvSel";
+ 	menu_name = "Invierta Selección";
+@@ -1064,6 +1138,11 @@
+ 	menu_name = "Find...";
+ 	tooltip = "Find object(s) by specific attributes";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Szukaj";
++	menu_name = "Szukaj...";
++	tooltip = "Szukaj wed³ug zaznaczonych kryteriów";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Hallazgo";
+ 	menu_name = "El Hallazgo";
+@@ -1089,6 +1168,11 @@
+ 	menu_name = "Refresh";
+ 	tooltip = "Refresh the recycled objects listing";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Od¶wie¿";
++	menu_name = "Od¶wie¿";
++	tooltip = "Od¶wie¿ listê obiektów w koszu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Refresque";
+ 	menu_name = "Refresque";
+@@ -1113,6 +1197,11 @@
+ 	menu_name = "Refresh All";
+ 	tooltip = "Refresh all listings";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Od¶wie¿ \n wszystko";
++	menu_name = "Od¶wie¿ wszystko";
++	tooltip = "Od¶wie¿ wszystkie listy";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Refresque Todo";
+ 	menu_name = "Refresque Todo";
+@@ -1137,6 +1226,11 @@
+ 	menu_name = "Tool Bar";
+ 	tooltip = "Show/hide tool bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "ToolBar";
++	menu_name = "Pasek narzêdzi";
++	tooltip = "Poka¿/Ukryj pasek narzêdzi";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "ToolBar";
+ 	menu_name = "Tool Bar";
+@@ -1161,6 +1255,11 @@
+ 	menu_name = "Find Bar";
+ 	tooltip = "Show/hide find bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "FindBar";
++	menu_name = "Pasek szukania";
++	tooltip = "Poka¿/Ukryj pasek szukania";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "FindBar";
+ 	menu_name = "Find Bar";
+@@ -1185,6 +1284,11 @@
+ 	menu_name = "Status Bar";
+ 	tooltip = "Show/hide status bar";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "StatusBar";
++	menu_name = "Pasek stanu";
++	tooltip = "Poka¿/Ukryj pasek stanu";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "StatusBar";
+ 	menu_name = "Status Bar";
+@@ -1210,6 +1314,11 @@
+ 	menu_name = "MIME Types...";
+ 	tooltip = "View/modify MIME Types";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "MIMETypes";
++	menu_name = "Typy MIME...";
++	tooltip = "Poka¿/Zmieñ typy MIME";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "MIMETypes";
+ 	menu_name = "MIME Types...";
+@@ -1235,6 +1344,11 @@
+ 	menu_name = "New File Browser";
+ 	tooltip = "Create a new file browser";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Przegl±d. \n Plików";
++	menu_name = "Nowa przegl±darka plików";
++	tooltip = "Utwórz now± przegl±darkê plików";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "FBrowser";
+ 	menu_name = "El Examinador Nuevo Del Archivo";
+@@ -1259,6 +1373,11 @@
+ 	menu_name = "New Image Browser";
+ 	tooltip = "Create a new image browser";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Przegl±d. \n Obrazków";
++	menu_name = "Nowa przegl±darka obrazów";
++	tooltip = "Utwórz now± przegl±darkê obrazów";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "IBrowser";
+ 	menu_name = "El Examinador Nuevo De La Imagen";
+@@ -1283,6 +1402,11 @@
+ 	menu_name = "New Archiver";
+ 	tooltip = "Create a new archiver";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Archiwa";
++	menu_name = "Nowy archiwizator";
++	tooltip = "Utwórz nowego archwizatora";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Archiver";
+ 	menu_name = "Archiver Nuevo";
+@@ -1308,6 +1432,11 @@
+ 	menu_name = "Options...";
+ 	tooltip = "Modify this application's options";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Opcje";
++	menu_name = "Opcje...";
++	tooltip = "Modyfikuj opcje tej aplikacji";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Las Opciones";
+ 	menu_name = "Las Opciones...";
+@@ -1332,6 +1461,11 @@
+ 	menu_name = "Customize...";
+ 	tooltip = "Customize the look and feel of this application";
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++	button_name = "Dostosuj";
++	menu_name = "Dostosuj...";
++	tooltip = "Dostosuj wygl±d i zachowanie tej aplikacji";
++#endif
+ #ifdef PROG_LANGUAGE_SPANISH
+ 	button_name = "Personal";
+ 	menu_name = "Personaliza...";
+@@ -1699,6 +1833,8 @@
+ "Arquivo"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Arkiv"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Plik"
+ #else
+ "File"
+ #endif
+@@ -1757,6 +1893,8 @@
+ "Edite"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Rediger"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Edycja"
+ #else
+ "Edit"
+ #endif
+@@ -1812,6 +1950,8 @@
+ "Vista"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Sikt"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Widok"
+ #else
+ "View"
+ #endif
+@@ -1853,6 +1993,8 @@
+ "Por"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Innstillinger"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Okna"
+ #else
+ "Settings"
+ #endif
+@@ -1891,6 +2033,8 @@
+ "Janelas"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Vinduer"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Okna"
+ #else
+ "Windows"
+ #endif
+diff -uNr endeavour-2.5.6.orig/endeavour2/statusbar.c endeavour-2.5.6.pld/endeavour2/statusbar.c
+--- endeavour-2.5.6.orig/endeavour2/statusbar.c	2005-10-07 09:01:56.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/statusbar.c	2005-12-30 15:53:06.522110500 +0100
+@@ -173,6 +173,8 @@
+ "Escreva protege é capacitado, estalido incapacitaá-lo"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Skrivebeskyttet muliggjører, klikk udyktiggjøre det"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Zabezpieczenie przed zapisem w³±czone, kliknij aby wy³±czyæ"
+ #else
+ "Write protect is enabled, click to disable it"
+ #endif
+@@ -208,6 +210,8 @@
+ "Escreva protege é incapacitado, estalido capacitaá-lo"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Skrivebeskyttet udyktiggjør, klikk muliggjøre det"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Zabezpieczenie przed zapisem wy³±czone, kliknij aby w³±czyæ"
+ #else
+ "Write protect is disabled, click to enable it"
+ #endif
+@@ -247,6 +251,8 @@
+ "Anule método é posto reciclar, clicar por purgar"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Stryk metode setter resirkulere, klikk sette det rense"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Kasowane pliki przesuwane s± do kosza, kliknij aby kasowa³o odrazu (nie mo¿na odzyskaæ)"
+ #else
+ "Delete method is set to recycle, click to set it to purge"
+ #endif
+@@ -285,6 +291,8 @@
+ "Anule método é posto purgar, clicar por reciclar"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Stryk metode setter rense, klikk sette det resirkulere"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Kasowane pliki odrazu, kliknij aby przesuwa³o do kosza (mo¿na odzyskaæ)"
+ #else
+ "Delete method is set to purge, click to set it to recycle"
+ #endif
+@@ -393,6 +401,8 @@
+ "Escreva protege é capacitado"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Skrivebeskyttet muliggjører"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Ochrona przed zapisem w³±czona"
+ #else
+ "Write protect is enabled"
+ #endif
+@@ -449,6 +459,8 @@
+ "Escreva protege é incapacitado"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Skrivebeskyttet udyktiggjør"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Ochrona przed zapisem wy³±czona"
+ #else
+ "Write protect is disabled"
+ #endif
+@@ -507,6 +519,8 @@
+ "Anule método é posto reciclar"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Stryk metode setter resirkulere"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Kasowanie ustawione na przesuwanie do kosza"
+ #else
+ "Delete method is set to recycle"
+ #endif
+@@ -563,6 +577,8 @@
+ "Anule método é posto purgar"
+ #elif defined(PROG_LANGUAGE_NORWEGIAN)
+ "Stryk metode setter rense"
++#elif defined(PROG_LANGUAGE_POLISH)
++"Kasowanie ustawione na kasuj natychmiast"
+ #else
+ "Delete method is set to purge"
+ #endif
+diff -uNr endeavour-2.5.6.orig/endeavour2/ziptool.front/config.h endeavour-2.5.6.pld/endeavour2/ziptool.front/config.h
+--- endeavour-2.5.6.orig/endeavour2/ziptool.front/config.h	2005-10-07 09:01:47.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/ziptool.front/config.h	2005-12-30 22:22:29.802224250 +0100
+@@ -74,7 +74,21 @@
+     GUI, consulter le manuel de votre GUI pour les options disponibles.\n\
+ \n"
+ #endif
+-
++#ifdef PROG_LANGUAGE_POLISH
++#define PROG_HELP_MESG  "\
++Usage: ziptool.front [device] [options] [GUI_options]\n\
++\n\
++    [device] specifies the device to select at startup.\n\
++\n\
++    [options] can be any of the following:\n\
++\n\
++	--help                  Prints (this) help screen and exits.\n\
++	--version               Prints version information and exits.\n\
++\n\
++    [GUI_options] can be any options standard to your GUI, consult\n\
++    your GUI's manual for available options.\n\
++\n"
++#endif
+ 
+ /*
+  *	ZipTool programs:
+diff -uNr endeavour-2.5.6.orig/endeavour2/ziptool.front/ziptool.c endeavour-2.5.6.pld/endeavour2/ziptool.front/ziptool.c
+--- endeavour-2.5.6.orig/endeavour2/ziptool.front/ziptool.c	2005-10-07 09:01:47.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/ziptool.front/ziptool.c	2005-12-30 22:38:19.113552500 +0100
+@@ -541,6 +541,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Capacité Totale"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Total Capacity"
++#endif
+ 		    , ss_kb, ss_mb
+ 		);
+ 		g_free(ss_kb);
+@@ -571,6 +574,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Libre"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Free"
++#endif
+ 		    ":", buf2
+ 		);
+ 		gtk_object_unref(GTK_OBJECT(adj));
+@@ -609,6 +615,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Libre & Disponible"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Free & Available"
++#endif
+ 		    ":", buf
+ 		);
+ 		gtk_object_unref(GTK_OBJECT(adj));
+@@ -650,6 +659,9 @@
+ #ifdef PROG_LANGUAGE_FRENCH
+ "Utilisé"
+ #endif
++#ifdef PROG_LANGUAGE_POLISH
++"Used"
++#endif
+ 		    ":", buf
+ 		);
+ 		gtk_object_unref(GTK_OBJECT(adj));
