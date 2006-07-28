@@ -20,8 +20,8 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/config.h endeavour-2.5.6.pld/endeavour
  
  
 diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavour2/edvcore.c
---- endeavour-2.5.6.orig/endeavour2/edvcore.c	2005-10-07 09:01:51.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/edvcore.c	2005-12-23 15:27:37.817417472 +0100
+--- endeavour-2.5.6.orig/endeavour2/edv_core.c	2005-10-07 09:01:51.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/edv_core.c	2005-12-23 15:27:37.817417472 +0100
 @@ -194,6 +194,11 @@
  	    EDV_CFG_PARM_FILE_MIME_TYPES,
  	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
