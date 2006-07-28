@@ -11,9 +11,9 @@ Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://wolfpack.twu.net/users/wolfpack/%{name}-%{version}.tgz
-# Source-md5:	3542a1d9b529830a830cda569ea68bfb
+# Source0-md5:	3542a1d9b529830a830cda569ea68bfb
 Source1:	http://abram.eu.org/EndeavourII/%{name}-icons.tgz
-# Source-md5:	d527e5211cc2858ccdc6de72cc3f3ff7
+# Source1-md5:	d527e5211cc2858ccdc6de72cc3f3ff7
 Source2:	%{name}-mimetypes.ini
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-PLD-polish.patch
