@@ -61,10 +61,9 @@ Pliki nag³ówkowe Endeavour2.
 
 %prep
 %setup -q -a1
+%patch0 -p1
 %if %{with polish}
 %patch1 -p1
-%else
-%patch0 -p1
 %endif
 
 %build
