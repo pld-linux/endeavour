@@ -71,7 +71,12 @@ Pliki nag³ówkowe Endeavour2.
 ./configure \
 	PLD
 
-%{__make}
+%{__make} \
+	CC="%{__cc}"			\
+	CPP="%{__cxx}"			\
+	OPTCFLAGS="%{rpmcflags} -fPIC"	\
+	EDV_LIB_DIR=%{_libdir}		\
+	LIB_DIRS="-L%{_prefix}/X11R6/%{_lib}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
