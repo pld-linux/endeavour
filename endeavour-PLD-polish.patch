@@ -130,27 +130,8 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/config.h endeavour-2.5.6.pld/endeavour
  
  
  /*
-@@ -343,13 +343,13 @@
- #endif
- 
- #define EDV_DEF_FORMAT_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/format.front"
-+ "/format.front"
- #define EDV_DEF_FSCK_FRONT_PROG		EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/fsck.front"
-+ "/fsck.front"
- #define EDV_DEF_ZIPTOOL_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/ziptool.front"
-+ "/ziptool.front"
- #define EDV_DEF_DOWNLOAD_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/download.front"
-+ "/download.front"
- #define EDV_DEF_MAIL_CLIENT_PROG	"/usr/bin/balsa"
- 
- 
-diff -uNr endeavour-2.5.6.orig/endeavour2/devicesedit.c endeavour-2.5.6.pld/endeavour2/devicesedit.c
---- endeavour-2.5.6.orig/endeavour2/devicesedit.c	2005-10-07 09:01:49.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/devicesedit.c	2005-12-30 15:53:06.474107500 +0100
+--- endeavour-2.5.6.orig/endeavour2/device_edit_dlg.c	2005-10-07 09:01:49.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/device_edit_dlg.c	2005-12-30 15:53:06.474107500 +0100
 @@ -113,6 +113,8 @@
  # define EDITWIN_TITLE		"O Artifício"
  #elif defined(PROG_LANGUAGE_NORWEGIAN)
@@ -721,24 +702,8 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/download.front/main.c endeavour-2.5.6.
  #else
  "Unable to download:\n\
  \n\
-diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavour2/edvcore.c
---- endeavour-2.5.6.orig/endeavour2/edvcore.c	2005-10-07 09:01:51.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/edvcore.c	2006-01-02 08:52:03.748160250 +0100
-@@ -194,6 +194,11 @@
- 	    EDV_CFG_PARM_FILE_MIME_TYPES,
- 	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
- 	);
-+#elif defined(PLD)
-+	EDV_SET_S(
-+	    EDV_CFG_PARM_FILE_MIME_TYPES,
-+	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
-+	);
- #else
- 	EDV_SET_S(
- 	    EDV_CFG_PARM_FILE_MIME_TYPES,
-diff -uNr endeavour-2.5.6.orig/endeavour2/edvop.c endeavour-2.5.6.pld/endeavour2/edvop.c
---- endeavour-2.5.6.orig/endeavour2/edvop.c	2005-10-07 09:01:49.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/edvop.c	2005-12-30 15:53:06.482108000 +0100
+--- endeavour-2.5.6.orig/endeavour2/edv_op.c	2005-10-07 09:01:49.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/edv_op.c	2005-12-30 15:53:06.482108000 +0100
 @@ -897,6 +897,11 @@
  \n\
      %s\n",
@@ -1947,27 +1912,27 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/imbr.c endeavour-2.5.6.pld/endeavour2/
  	button_name = "StatusBar";
  	menu_name = "Status Bar";
 @@ -2419,6 +2634,10 @@
-         button_name = "HidObj";
-         menu_name = "Objets Cachés";
-         tooltip = "Monter/cacher objets cachés(.)";
+ 	button_name = "HidObj";
+ 	menu_name = "Objets Cachés";
+ 	tooltip = "Monter/cacher objets cachés(.)";
 +#elif defined(PROG_LANGUAGE_POLISH)
 +	button_name = "UkryteOb";
 +	menu_name = "Ukryte obiekty";
 +	tooltip = "Poka¿/Ukryj ukryte obiekty";
  #else
-         button_name = "HidObj";
-         menu_name = "Hidden Objects";
+ 	button_name = "HidObj";
+ 	menu_name = "Hidden Objects";
 @@ -2437,6 +2656,10 @@
-         button_name = "NoAccObj";
-         menu_name = "Objet à accès réservé";
-         tooltip = "Monter/cacher les objets à accès réservé";
+ 	button_name = "NoAccObj";
+ 	menu_name = "Objet à accès réservé";
+ 	tooltip = "Monter/cacher les objets à accès réservé";
 +#elif defined(PROG_LANGUAGE_POLISH)
 +	button_name = "NoAccObj";
 +	menu_name = "Brak dostêpu do obiektu";
 +	tooltip = "Poka¿/Ukryj obiekty z brakiem dostêpu";
  #else
-         button_name = "NoAccObj";
-         menu_name = "No Access Objects";
+ 	button_name = "NoAccObj";
+ 	menu_name = "No Access Objects";
 @@ -2455,6 +2678,10 @@
  	button_name = "NonImgObj";
  	menu_name = "Autres qu'Image";
@@ -2229,32 +2194,6 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/imbr.c endeavour-2.5.6.pld/endeavour2/
  #ifdef PROG_LANGUAGE_SPANISH
  	    "La Ubicación:",
  #endif
-diff -uNr endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c
---- endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c	2005-10-07 09:01:45.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c	2005-12-22 14:55:50.000000000 +0100
-@@ -24,7 +24,7 @@
- 
- 
- #define CFLAGS	"\
---I/usr/lib/endeavour2/include"
-+-I/usr/include/endeavour2"
- 
- #define LIBS	"\
- -lendeavour2"
-diff -uNr endeavour-2.5.6.orig/endeavour2/lib/Makefile endeavour-2.5.6.pld/endeavour2/lib/Makefile
---- endeavour-2.5.6.orig/endeavour2/lib/Makefile	2005-10-07 09:01:45.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/lib/Makefile	2005-12-22 14:25:24.000000000 +0100
-@@ -70,8 +70,8 @@
- BIN_DIR         = $(PREFIX)/bin
- LIB_DIR         = $(PREFIX)/lib
- EDV_ARCH_DIR    = $(PREFIX)/lib/endeavour2
--EDV_INCLUDE_DIR = $(PREFIX)/lib/endeavour2/include
--EDV_LIB_DIR     = $(PREFIX)/lib/endeavour2/lib
-+EDV_INCLUDE_DIR = $(PREFIX)/include/endeavour2/
-+EDV_LIB_DIR     = $(PREFIX)/lib/
- 
- 
- # Compile time information export:
 diff -uNr endeavour-2.5.6.orig/endeavour2/pdialog.c endeavour-2.5.6.pld/endeavour2/pdialog.c
 --- endeavour-2.5.6.orig/endeavour2/pdialog.c	2005-10-07 09:01:48.000000000 +0200
 +++ endeavour-2.5.6.pld/endeavour2/pdialog.c	2005-12-30 15:53:06.510109750 +0100
@@ -2298,105 +2237,6 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/pdialog.c endeavour-2.5.6.pld/endeavou
  #ifdef PROG_LANGUAGE_SPANISH
  	    "Ayuda",
  #endif
-diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/endeavour2/platforms.ini
---- endeavour-2.5.6.orig/endeavour2/platforms.ini	2005-10-07 09:02:02.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/platforms.ini	2005-12-23 12:04:27.000000000 +0100
-@@ -285,6 +285,95 @@
- 			MustExist = Yes
- 			DependPath = gtk-config
- 
-+# PLD/Linux
-+# autor Micha³ Abramowicz <abram at pld-linux.org>
-+# 14.12.2005
-+Platform = PLD
-+	Description = For PLD Linux (http://www.pld-linux.org)
-+	PREFIX = /usr
-+	CFLAGS = -g -O2 -Wall -DPLD -funroll-loops -fomit-frame-pointer -ffast-math -finline-functions
-+	LIBS = -lm
-+	LIB_DIR =
-+	CC = cc
-+	CPP = c++
-+	PlatformSearchPathInclude = /usr/include
-+	PlatformSearchPathInclude = /usr/X11R6/include
-+	PlatformSearchPathLib = /lib
-+	PlatformSearchPathLib = /usr/lib
-+	PlatformSearchPathLib = /usr/X11R6/lib
-+	PlatformSearchPathEtc = /etc
-+	PlatformSearchPathBin = /usr/bin
-+	PlatformSearchPathBin = /usr/X11R6/bin
-+	PlatformSearchPathData = /usr/share/icons
-+	PlatformFeature = arch-i386
-+		Description = Adds -march=i386 for 486 specific optimizations
-+		MustExist = Preferred  
-+		FeatureCFLAGS = -march=i386
-+		FeatureDepend = i386
-+			DependType = Machine
-+			MustExist = Yes
-+			DependMachine = i386
-+	PlatformFeature = arch-i586
-+		Description = Adds -march=i586 for Pentium specific optimizations
-+		MustExist = Preferred
-+		FeatureCFLAGS = -march=i586
-+		FeatureDepend = i586
-+			DependType = Machine
-+			MustExist = Yes
-+			DependMachine = i586
-+	PlatformFeature = arch-i686
-+		Description = Adds -march=i686 for Pentium Pro specific optimizations
-+		MustExist = Preferred
-+		FeatureCFLAGS = -march=i686
-+		FeatureDepend = i686
-+			DependType = Machine
-+			MustExist = Yes
-+			DependMachine = i686
-+        PlatformFeature = libgif
-+                Description = Uncompressed GIF Library
-+                MustExist = Preffered
-+                FeatureCFLAGS = -DHAVE_LIBGIF
-+                FeatureLIBS = -lgif
-+                FeatureDepend = libgif-devel
-+                        DependType = Header
-+                        MustExist = Yes
-+                        DependPath = gif_lib.h
-+                        DependGrepString = DGifOpenFileName
-+        PlatformFeature = XF86VidMode
-+                Description = XF86 Video Mode extension
-+                MustExist = Preferred                  
-+                FeatureCFLAGS = -DHAVE_XF86_VIDMODE
-+                FeatureLIBS = -lXxf86vm
-+                FeatureLIB_DIR = -L/usr/X11R6/lib/
-+                FeatureDepend = xf86vidmode-lib
-+                        DependType = Library
-+                        MustExist = Yes
-+                        DependPath = libXxf86vm.a
-+                        DependGrepString = XF86VidModeQueryExtension
-+                FeatureDepend = xf86vidmode-devel
-+                        DependType = Header
-+                        MustExist = Yes
-+                        DependPath = X11/extensions/xf86vmode.h
-+                        DependGrepString = XF86VidModeQueryExtension
-+	PlatformFeature = Imlib
-+		Description = Image library
-+		MustExist = Preffered
-+		FeatureCFLAGS = `imlib-config --cflags` -DHAVE_IMLIB
-+		FeatureLIBS = `imlib-config --libs`
-+		FeatureDepend = Imlib-devel
-+			DependType = Program
-+			MustExist = Yes
-+			DependPath = imlib-config
-+	PlatformFeature = libgtk
-+		Description = GTK+ 1.2.x
-+		MustExist = Yes
-+		FeatureCFLAGS = `gtk-config --cflags`
-+		FeatureLIBS = `gtk-config --libs`
-+		FeatureLIB_DIR = -L/usr/X11R6/lib
-+		FeatureDepend = gtk-devel
-+			DependType = Program
-+			MustExist = Yes
-+			DependPath = gtk-config
- 
- # Debian GNU/Linux
- #
 diff -uNr endeavour-2.5.6.orig/endeavour2/recbin.c endeavour-2.5.6.pld/endeavour2/recbin.c
 --- endeavour-2.5.6.orig/endeavour2/recbin.c	2005-10-07 09:01:56.000000000 +0200
 +++ endeavour-2.5.6.pld/endeavour2/recbin.c	2005-12-30 15:53:06.522110500 +0100
@@ -2768,9 +2608,8 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/recbin.c endeavour-2.5.6.pld/endeavour
  #else
  "Windows"
  #endif
-diff -uNr endeavour-2.5.6.orig/endeavour2/statusbar.c endeavour-2.5.6.pld/endeavour2/statusbar.c
---- endeavour-2.5.6.orig/endeavour2/statusbar.c	2005-10-07 09:01:56.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/statusbar.c	2005-12-30 15:53:06.522110500 +0100
+--- endeavour-2.5.6.orig/endeavour2/edv_status_bar.c	2005-10-07 09:01:56.000000000 +0200
++++ endeavour-2.5.6.pld/endeavour2/edv_status_bar.c	2005-12-30 15:53:06.522110500 +0100
 @@ -173,6 +173,8 @@
  "Escreva protege é capacitado, estalido incapacitaá-lo"
  #elif defined(PROG_LANGUAGE_NORWEGIAN)
