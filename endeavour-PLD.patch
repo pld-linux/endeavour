@@ -63,7 +63,7 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/lib/Makefile endeavour-2.5.6.pld/endea
 diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/endeavour2/platforms.ini
 --- endeavour-2.5.6.orig/endeavour2/platforms.ini	2005-10-07 09:02:02.000000000 +0200
 +++ endeavour-2.5.6.pld/endeavour2/platforms.ini	2005-12-23 12:04:27.893567576 +0100
-@@ -285,6 +285,90 @@
+@@ -285,6 +285,66 @@
  			MustExist = Yes
  			DependPath = gtk-config
  
@@ -73,11 +73,11 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/ende
 +Platform = PLD
 +	Description = For PLD Linux (http://www.pld-linux.org)
 +	PREFIX = /usr
-+	CFLAGS = -g -O2 -Wall -DPLD -funroll-loops -fomit-frame-pointer -ffast-math -finline-functions
++	CFLAGS = $(OPTCFLAGS)
 +	LIBS = -lm
 +	LIB_DIR =
-+	CC = cc
-+	CPP = c++
++	CC = gcc
++	CPP = g++
 +	PlatformSearchPathInclude = /usr/include
 +	PlatformSearchPathInclude = /usr/X11R6/include
 +	PlatformSearchPathLib = /lib
@@ -87,30 +87,6 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/ende
 +	PlatformSearchPathBin = /usr/bin
 +	PlatformSearchPathBin = /usr/X11R6/bin
 +	PlatformSearchPathData = /usr/share/icons
-+	PlatformFeature = arch-i386
-+		Description = Adds -march=i386 for 486 specific optimizations
-+		MustExist = Preferred  
-+		FeatureCFLAGS = -march=i386
-+		FeatureDepend = i386
-+			DependType = Machine
-+			MustExist = Yes
-+			DependMachine = i386
-+	PlatformFeature = arch-i586
-+		Description = Adds -march=i586 for Pentium specific optimizations
-+		MustExist = Preferred
-+		FeatureCFLAGS = -march=i586
-+		FeatureDepend = i586
-+			DependType = Machine
-+			MustExist = Yes
-+			DependMachine = i586
-+	PlatformFeature = arch-i686
-+		Description = Adds -march=i686 for Pentium Pro specific optimizations
-+		MustExist = Preferred
-+		FeatureCFLAGS = -march=i686
-+		FeatureDepend = i686
-+			DependType = Machine
-+			MustExist = Yes
-+			DependMachine = i686
 +        PlatformFeature = libgif
 +                Description = Uncompressed GIF Library
 +                MustExist = Preffered
