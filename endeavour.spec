@@ -1,5 +1,6 @@
+#
 # Conditional build:
-%bcond_with	polish	# build with polish translation
+%bcond_with	polish	# build with Polish translation
 #
 %define		pname	endeavour2
 
@@ -75,7 +76,7 @@ Pliki nag³ówkowe Endeavour2.
 	CPP="%{__cxx}"			\
 	OPTCFLAGS="%{rpmcflags} -fPIC"	\
 	EDV_LIB_DIR=%{_libdir}		\
-	LIB_DIRS="-L%{_prefix}/X11R6/%{_lib}"
+	LIB_DIRS=
 
 %install
 rm -rf $RPM_BUILD_ROOT
