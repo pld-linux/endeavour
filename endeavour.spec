@@ -7,12 +7,12 @@
 Summary:	endeavour2 file browser
 Summary(pl):	endeavour2 - przegl±darka plików
 Name:		endeavour
-Version:	2.7.1
+Version:	2.7.4
 Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://wolfpack.twu.net/users/wolfpack/%{name}-%{version}.tgz
-# Source0-md5:	3542a1d9b529830a830cda569ea68bfb
+# Source0-md5:	19bef38c8e70f1eab652ebc1fbabdf5c
 Source1:	http://abram.eu.org/EndeavourII/%{name}-icons.tgz
 # Source1-md5:	d527e5211cc2858ccdc6de72cc3f3ff7
 Source2:	%{name}-mimetypes.ini
