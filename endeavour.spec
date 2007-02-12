@@ -5,7 +5,7 @@
 %define		pname	endeavour2
 
 Summary:	endeavour2 file browser
-Summary(pl.UTF-8):   endeavour2 - przeglądarka plików
+Summary(pl.UTF-8):	endeavour2 - przeglądarka plików
 Name:		endeavour
 Version:	2.7.4
 Release:	1
@@ -38,7 +38,7 @@ endeavour - przeglądarka plików.
 
 %package libs
 Summary:	Endeavour2 library
-Summary(pl.UTF-8):   Bibloteka Endeavour2
+Summary(pl.UTF-8):	Bibloteka Endeavour2
 Group:		X11/Applications
 
 %description libs
@@ -49,7 +49,7 @@ Biblioteka Endeavour2.
 
 %package devel
 Summary:	Header files for endeavour2
-Summary(pl.UTF-8):   Pliki nagłówkowe endeavour2
+Summary(pl.UTF-8):	Pliki nagłówkowe endeavour2
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	%{name}-libs = %{version}-%{release}
