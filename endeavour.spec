@@ -5,7 +5,7 @@
 %define		pname	endeavour2
 
 Summary:	endeavour2 file browser
-Summary(pl):	endeavour2 - przegl眃arka plik體
+Summary(pl.UTF-8):   endeavour2 - przegl膮darka plik贸w
 Name:		endeavour
 Version:	2.7.4
 Release:	1
@@ -33,23 +33,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 endeavour file browser.
 
-%description -l pl
-endeavour - przegl眃arka plik體.
+%description -l pl.UTF-8
+endeavour - przegl膮darka plik贸w.
 
 %package libs
 Summary:	Endeavour2 library
-Summary(pl):	Bibloteka Endeavour2
+Summary(pl.UTF-8):   Bibloteka Endeavour2
 Group:		X11/Applications
 
 %description libs
 Endeavour2 library.
 
-%description libs -l pl
+%description libs -l pl.UTF-8
 Biblioteka Endeavour2.
 
 %package devel
 Summary:	Header files for endeavour2
-Summary(pl):	Pliki nag丑wkowe endeavour2
+Summary(pl.UTF-8):   Pliki nag艂贸wkowe endeavour2
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	%{name}-libs = %{version}-%{release}
@@ -57,8 +57,8 @@ Requires:	%{name}-libs = %{version}-%{release}
 %description devel
 Endeavour2 header files.
 
-%description devel -l pl
-Pliki nag丑wkowe Endeavour2.
+%description devel -l pl.UTF-8
+Pliki nag艂贸wkowe Endeavour2.
 
 %prep
 %setup -q -a1
