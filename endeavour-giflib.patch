@@ -1,0 +1,517 @@
+--- endeavour-3.1.4/endeavour2/imgio_gif.c.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/imgio_gif.c	2014-02-03 18:55:20.501284490 +0100
+@@ -41,9 +41,9 @@
+ 
+ /* Error Code To String */
+ static const char *ImgGIFErrorStringDecode(const int gif_error_code);
+-#define DGIF_STR_ERROR		ImgGIFErrorStringDecode
++#define DGIF_STR_ERROR		GifErrorString
+ static const char *ImgGIFErrorStringEncode(const int gif_error_code);
+-#define EGIF_STR_ERROR		ImgGIFErrorStringEncode
++#define EGIF_STR_ERROR		GifErrorString
+ 
+ /* Open */
+ static int ImgReadGIFReadCB(
+@@ -492,7 +492,7 @@
+ #define MIN(a,b)	(((a) < (b)) ? (a) : (b))
+ #define CLIP(a,l,h)	(MIN(MAX((a),(l)),(h)))
+ #define STRLEN(s)	(((s) != NULL) ? strlen(s) : 0)
+-#define STRISEMPTY(s)	(((s) != NULL) ? (*(s) == '\0') : TRUE)
++#define STRISEMPTY(s)	(((s) != NULL) ? (*(s) == '\0') : true)
+ 
+ 
+ /*
+@@ -500,29 +500,12 @@
+  */
+ void ImgGIFVersion(int *major, int *minor, int *release) 
+ {
+-	const char *ver_str = GIF_LIB_VERSION, *s;
+-
+-	s = strstr(ver_str, "Version");
+-	while((*s != '\0') && (*s != ' '))
+-	    s++;
+-	while(*s == ' ')
+-	    s++;
+ 	if(major != NULL)
+-	    *major = ATOI(s);
+-
+-	while((*s != '\0') && (*s != '.'))
+-	    s++;
+-	while(*s == '.')
+-	    s++;
++	    *major = GIFLIB_MAJOR;
+ 	if(minor != NULL)
+-	    *minor = ATOI(s);
+-
+-	while((*s != '\0') && (*s != '.'))
+-	    s++;
+-	while(*s == '.')
+-	    s++;
++	    *minor = GIFLIB_MINOR;
+ 	if(release != NULL)
+-	    *release = ATOI(s);
++	    *release = GIFLIB_RELEASE;
+ }
+ 
+ 
+@@ -986,7 +969,7 @@
+ 	    );
+ 	    if(gif_status != GIF_OK)
+ 	    {
+-		ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++		ImgOpenSetError(DGIF_STR_ERROR(gif_file->Error));
+ 		status = -1;
+ 		break;
+ 	    }
+@@ -1076,7 +1059,7 @@
+ 				);
+ 				if(gif_status != GIF_OK)
+ 				{
+-				    ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++				    ImgOpenSetError(DGIF_STR_ERROR(gif_file->Error));
+ 				    status = -1;
+ 				    break;
+ 				}
+@@ -1107,7 +1090,7 @@
+ 			    );
+ 			    if(gif_status != GIF_OK)
+ 			    {
+-				ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++				ImgOpenSetError(DGIF_STR_ERROR(gif_file->Error));
+ 				status = -1;
+ 				break;
+ 			    }
+@@ -1235,7 +1218,7 @@
+ 		}
+ 		else
+ 		{
+-		    ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++		    ImgOpenSetError(DGIF_STR_ERROR(gif_file->Error));
+ 		    status = -1;
+ 		}
+ 		break;
+@@ -1391,7 +1374,7 @@
+ 					);
+ 					if(gif_status != GIF_OK)
+ 					{
+-					    ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++					    ImgOpenSetError(DGIF_STR_ERROR(gif_file->Error));
+ 					    status = -1;
+ 					    get_error_need_break = 1;
+ 					    break;
+@@ -1421,7 +1404,7 @@
+ 			    );
+ 			    if(gif_status != GIF_OK)
+ 			    {
+-				ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++				ImgOpenSetError(DGIF_STR_ERROR(gif_file->Error));
+ 				status = -1;
+ 				break;
+ 			    }
+@@ -1429,7 +1412,7 @@
+ 		    }
+ 		    else
+ 		    {
+-			ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++			ImgOpenSetError(DGIF_STR_ERROR(gif_file->Error));
+ 			status = -1;
+ 		    }
+ 		}
+@@ -1469,7 +1452,8 @@
+ {
+ 	const int	bpp = 4;		/* RGBA */
+ 	int		i,
+-			gif_status;
++			gif_status,
++			gif_error;
+ 	GifFileType *gif_file;
+ 	GifRowType gif_screen_row;
+ 	ImgGIFReadContext *ctx = NULL;
+@@ -1629,11 +1613,12 @@
+ 	 */
+ 	ctx->gif_file = gif_file = DGifOpen(
+ 	    ctx,
+-	    ImgReadGIFReadCB
++	    ImgReadGIFReadCB,
++	    &gif_error
+ 	);
+ 	if(gif_file == NULL)
+ 	{
+-	    ImgOpenSetError(DGIF_STR_ERROR(GifLastError()));
++	    ImgOpenSetError(DGIF_STR_ERROR(gif_error));
+ 	    CLEANUP_RETURN(-1);
+ 	}
+ 
+@@ -1778,12 +1763,13 @@
+ 
+ 	/* End the GIF decoding */
+ 	gif_status = DGifCloseFile(ctx->gif_file);
+-	ctx->gif_file = NULL;
+ 	if(gif_status != GIF_OK)
+ 	{
+-	    ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++	    ImgOpenSetError(DGIF_STR_ERROR(ctx->gif_file->Error));
++	    free(ctx->gif_file);
+ 	    ctx->status = -1;
+ 	}
++	ctx->gif_file = NULL;
+ 
+ 	if(*ctx->user_aborted)
+ 	{
+@@ -1974,7 +1960,8 @@
+ {
+ 	const int	bpp = 4;		/* RGBA */
+ 	int		i,
+-			gif_status;
++			gif_status,
++			gif_error;
+ 	GifFileType *gif_file;
+ 	GifRowType gif_screen_row;
+ 	ImgGIFReadContext *ctx = NULL;
+@@ -2132,11 +2119,12 @@
+ 	 */
+ 	ctx->gif_file = gif_file = DGifOpen(
+ 	    ctx,
+-	    ImgReadGIFReadCB
++	    ImgReadGIFReadCB,
++	    &gif_error
+ 	);
+ 	if(gif_file == NULL)
+ 	{
+-	    ImgOpenSetError(DGIF_STR_ERROR(GifLastError()));
++	    ImgOpenSetError(GifErrorString(gif_error));
+ 	    CLEANUP_RETURN(-1);
+ 	}
+ 
+@@ -2294,12 +2282,13 @@
+ 
+ 	/* End the GIF decoding */
+ 	gif_status = DGifCloseFile(ctx->gif_file);
+-	ctx->gif_file = NULL;
+ 	if(gif_status != GIF_OK)
+ 	{
+-	    ImgOpenSetError(DGIF_STR_ERROR(gif_status));
++	    ImgOpenSetError(DGIF_STR_ERROR(ctx->gif_file->Error));
++	    free(ctx->gif_file);
+ 	    ctx->status = -1;
+ 	}
++	ctx->gif_file = NULL;
+ 
+ 	/* Check for user abort */
+ 	if(*ctx->user_aborted)
+@@ -2770,7 +2759,7 @@
+ 	}
+ 
+ 	/* Create the GIF colormap from the colors list */
+-	colormap = MakeMapObject(
++	colormap = GifMakeMapObject(
+ 	    256,				/* Must be 256 or else fails */
+ 	    NULL
+ 	);
+@@ -2831,25 +2820,40 @@
+ 		0x00			/* Hi byte of a u_int16_t loop count */
+ 	    };
+ 
+-	int gif_status = EGifPutExtensionFirst(
++	int gif_status = EGifPutExtensionLeader(
++	    ft,
++	    APPLICATION_EXT_FUNC_CODE
++	);
++	if(gif_status != GIF_OK)
++	{
++	    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
++	    return(-1);
++	}
++
++	gif_status = EGifPutExtensionBlock(
+ 	    ft,
+-	    APPLICATION_EXT_FUNC_CODE,
+ 	    sizeof(buf), buf
+ 	);
+ 	if(gif_status != GIF_OK)
+ 	{
+-	    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++	    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 	    return(-1);
+ 	}
+ 
+-	gif_status = EGifPutExtensionLast(
++	gif_status = EGifPutExtensionBlock(
+ 	    ft,
+-	    APPLICATION_EXT_FUNC_CODE,
+ 	    sizeof(buf2), buf2
+ 	);
+ 	if(gif_status != GIF_OK)
+ 	{
+-	    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++	    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
++	    return(-1);
++	}
++
++	gif_status = EGifPutExtensionTrailer(ft);
++	if(gif_status != GIF_OK)
++	{
++	    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 	    return(-1);
+ 	}
+ 
+@@ -3010,13 +3014,13 @@
+ 	    if((status2 != 0) || (colormap == NULL) || (cidx == NULL))
+ 	    {
+ 		if(colormap != NULL)
+-		    FreeMapObject(colormap);
++		    GifFreeMapObject(colormap);
+ 		free(cidx);
+ 		continue;
+ 	    }
+ 	    if(*ctx->user_aborted)
+ 	    {
+-		FreeMapObject(colormap);
++		GifFreeMapObject(colormap);
+ 		free(cidx);
+ 		status = -4;
+ 		break;
+@@ -3034,8 +3038,8 @@
+ 		);
+ 		if(gif_status != GIF_OK)
+ 		{
+-		    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
+-		    FreeMapObject(colormap);
++		    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
++		    GifFreeMapObject(colormap);
+ 		    free(cidx);
+ 		    status = -1;
+ 		    break;
+@@ -3048,7 +3052,7 @@
+ 		{
+ 		    if(ImgWriteGIFLoopingBlock(ft) != 0)
+ 		    {
+-			FreeMapObject(colormap);
++			GifFreeMapObject(colormap);
+ 			free(cidx);
+ 			status = -1;
+ 			break;
+@@ -3087,8 +3091,8 @@
+ 		);
+ 		if(gif_status != GIF_OK)
+ 		{
+-		    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
+-		    FreeMapObject(colormap);
++		    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
++		    GifFreeMapObject(colormap);
+ 		    free(cidx);
+ 		    status = -1;
+ 		    break;
+@@ -3106,15 +3110,15 @@
+ 	    );
+ 	    if(gif_status != GIF_OK)
+ 	    {
+-		ImgSaveSetError(EGIF_STR_ERROR(gif_status));
+-		FreeMapObject(colormap);
++		ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
++		GifFreeMapObject(colormap);
+ 		free(cidx);
+ 		status = -1;
+ 		break;
+ 	    }
+ 
+ 	    /* Delete the GIF colormap */
+-	    FreeMapObject(colormap);
++	    GifFreeMapObject(colormap);
+ 
+ 	    /* Write the image data for this frame */
+ 	    if(ctx->interlaced)
+@@ -3140,7 +3144,7 @@
+ 			);
+ 			if(gif_status != GIF_OK)
+ 			{
+-			    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++			    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 			    status = -1;
+ 			    break;
+ 			}
+@@ -3184,7 +3188,7 @@
+ 		    );
+ 		    if(gif_status != GIF_OK)
+ 		    {
+-			ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++			ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 			status = -1;
+ 			break;
+ 		    }
+@@ -3326,7 +3330,7 @@
+ 	if(cidx == NULL)
+ 	{
+ 	    const int error_code = errno;
+-	    FreeMapObject(colormap);
++	    GifFreeMapObject(colormap);
+ 	    imgio_last_save_error = "Memory allocation error";
+ 	    errno = error_code;
+ 	    return(-3);
+@@ -3398,7 +3402,7 @@
+ 		);
+ 		if(gif_status != GIF_OK)
+ 		{
+-		    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++		    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 		    status = -1;
+ 		    break;
+ 		}
+@@ -3447,7 +3451,7 @@
+ 		);
+ 		if(gif_status != GIF_OK)
+ 		{
+-		    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++		    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 		    status = -1;
+ 		    break;
+ 		}
+@@ -3463,7 +3467,7 @@
+ 	    );
+ 	    if(gif_status != GIF_OK)
+ 	    {
+-		ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++		ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 		status = -1;
+ 		break;
+ 	    }
+@@ -3491,7 +3495,7 @@
+ 			);
+ 			if(gif_status != GIF_OK)
+ 			{
+-			    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++			    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 			    status = -1;
+ 			    break;
+ 			}
+@@ -3535,7 +3539,7 @@
+ 		    );
+ 		    if(gif_status != GIF_OK)
+ 		    {
+-			ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++			ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 			status = -1;
+ 			break;
+ 		    }
+@@ -3566,7 +3570,7 @@
+ 	}
+ 
+ 	/* Delete the GIF colormap */
+-	FreeMapObject(colormap);
++	GifFreeMapObject(colormap);
+ 
+ 	/* Delete the GIF color index image data */
+ 	free(cidx);
+@@ -3698,7 +3702,7 @@
+ 	if(cidx == NULL)
+ 	{
+ 	    const int error_code = errno;
+-	    FreeMapObject(colormap);
++	    GifFreeMapObject(colormap);
+ 	    imgio_last_save_error = "Memory allocation error";
+ 	    errno = error_code;
+ 	    return(-3);
+@@ -3770,7 +3774,7 @@
+ 		);
+ 		if(gif_status != GIF_OK)
+ 		{
+-		    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++		    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 		    status = -1;
+ 		    break;
+ 		}
+@@ -3819,7 +3823,7 @@
+ 		);
+ 		if(gif_status != GIF_OK)
+ 		{
+-		    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++		    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 		    status = -1;
+ 		    break;
+ 		}
+@@ -3835,7 +3839,7 @@
+ 	    );
+ 	    if(gif_status != GIF_OK)
+ 	    {
+-		ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++		ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 		status = -1;
+ 		break;
+ 	    }
+@@ -3865,7 +3869,7 @@
+ 			);
+ 			if(gif_status != GIF_OK)
+ 			{
+-			    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++			    ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 			    status = -1;
+ 			    break;
+ 			}
+@@ -3910,7 +3914,7 @@
+ 		    );
+ 		    if(gif_status != GIF_OK)
+ 		    {
+-			ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++			ImgSaveSetError(EGIF_STR_ERROR(ft->Error));
+ 			status = -1;
+ 			break;
+ 		    }
+@@ -3941,7 +3945,7 @@
+ 	}
+ 
+ 	/* Delete the GIF colormap */
+-	FreeMapObject(colormap);
++	GifFreeMapObject(colormap);
+ 
+ 	/* Delete the GIF color index image data */
+ 	free(cidx);
+@@ -3979,7 +3983,8 @@
+ 	const int	bpp = 4,		/* RGBA */
+ 			_bpl = (bpl > 0) ? bpl : width * bpp;
+ 	int		user_aborted = 0,
+-			gif_status;
++			gif_status,
++			gif_error;
+ 	ImgGIFWriteContext *ctx;
+ 
+ #define CLEANUP_RETURN(_v_)		{	\
+@@ -4108,11 +4113,12 @@
+ 	 */
+ 	ctx->gif_file = EGifOpen(
+ 	    ctx,
+-	    ImgWriteGIFWriteCB
++	    ImgWriteGIFWriteCB,
++	    &gif_error
+ 	);
+ 	if(ctx->gif_file == NULL)
+ 	{
+-	    ImgSaveSetError(EGIF_STR_ERROR(GifLastError()));
++	    ImgSaveSetError(EGIF_STR_ERROR(gif_error));
+ 	    CLEANUP_RETURN(-1);
+ 	}
+ 
+@@ -4150,7 +4156,7 @@
+ 	    );
+ 	    if(gif_status != GIF_OK)
+ 	    {
+-		ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++		ImgSaveSetError(EGIF_STR_ERROR(ctx->gif_file->Error));
+ 		ctx->status = -1;
+ 	    }
+ 	}
+@@ -4172,12 +4178,13 @@
+ 
+ 	/* End the GIF encoding */
+ 	gif_status = EGifCloseFile(ctx->gif_file);
+-	ctx->gif_file = NULL;
+ 	if(gif_status != GIF_OK)
+ 	{
+-	    ImgSaveSetError(EGIF_STR_ERROR(gif_status));
++	    ImgSaveSetError(EGIF_STR_ERROR(ctx->gif_file->Error));
++	    free(ctx->gif_file);
+ 	    ctx->status = -1;
+ 	}
++	ctx->gif_file = NULL;
+ 
+ 	if(*ctx->user_aborted)
+ 	{

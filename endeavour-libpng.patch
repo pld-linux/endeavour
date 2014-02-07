@@ -1,0 +1,25 @@
+--- endeavour-3.1.4/endeavour2/imgio_png.c.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/imgio_png.c	2014-02-05 17:55:19.894183865 +0100
+@@ -1,6 +1,8 @@
+ #ifdef HAVE_LIBPNG
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++#include <strings.h>
+ #include <errno.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+@@ -651,11 +653,11 @@
+ 
+ 	/* Get the PNG color type */
+ 	ctx->png_color_type = color_type = ((png_info_ptr != NULL) ?
+-		png_info_ptr->color_type : PNG_COLOR_TYPE_GRAY
++		png_get_color_type(png_ptr, png_info_ptr) : PNG_COLOR_TYPE_GRAY
+ 	);
+ 
+ 	/* Get the PNG bit depth */
+-	ctx->png_bit_depth = bit_depth = (png_info_ptr != NULL) ? png_info_ptr->bit_depth : 1;
++	ctx->png_bit_depth = bit_depth = (png_info_ptr != NULL) ? png_get_bit_depth(png_ptr, png_info_ptr) : 1;
+ 
+ 
+ 	/* Insert transformations here */

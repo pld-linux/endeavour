@@ -1,58 +1,84 @@
 #
 # Conditional build:
-%bcond_with	polish	# build with Polish translation
+%bcond_with	gtk2	# GTK+ 2.x port (incomplete)
+%bcond_with	polish	# build with Polish translation [outdated patch]
 #
-%define		pname	endeavour2
-
-Summary:	endeavour2 file browser
-Summary(pl.UTF-8):	endeavour2 - przeglądarka plików
+Summary:	Endeavour Mark II file management suite
+Summary(pl.UTF-8):	Oprogramowanie do zarządzania plikami Endeavour Mark II
 Name:		endeavour
-Version:	2.7.4
+Version:	3.1.4
 Release:	1
-License:	GPL
+License:	GPL v2
 Group:		X11/Applications
-Source0:	http://wolfpack.twu.net/users/wolfpack/%{name}-%{version}.tgz
-# Source0-md5:	19bef38c8e70f1eab652ebc1fbabdf5c
+Source0:	http://wolfsinger.com/~wolfpack/packages/%{name}-%{version}.tar.bz2
+# Source0-md5:	1952cf9ef05b75abe48b45cb4068427f
 Source1:	http://abram.eu.org/EndeavourII/%{name}-icons.tgz
 # Source1-md5:	d527e5211cc2858ccdc6de72cc3f3ff7
 Source2:	%{name}-mimetypes.ini
 Patch0:		%{name}-PLD.patch
-Patch1:		%{name}-PLD-polish.patch
-URL:		http://wolfpack.twu.net/Endeavour2/
-BuildRequires:	gtk+-devel >= 1.2
-#BuildRequires:	gtk+2-devel >= 2.0
+Patch1:		%{name}-fixes.patch
+Patch2:		%{name}-giflib.patch
+Patch3:		%{name}-verbose.patch
+Patch4:		%{name}-libmng.patch
+Patch5:		%{name}-libpng.patch
+Patch6:		%{name}-PLD-polish.patch
+URL:		http://freecode.com/projects/endeavour2
+BuildRequires:	bzip2-devel
+BuildRequires:	giflib-devel
+BuildRequires:	glib-devel >= 1.2
+%{!?with_gtk2:BuildRequires:	gtk+-devel >= 1.2}
+%{?with_gtk2:BuildRequires:	gtk+2-devel >= 2.0}
 BuildRequires:	imlib-devel
-#BuildRequires:	pkgconfig
+BuildRequires:	libid3tag-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libmng-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libstdc++-devel
+BuildRequires:	libtar-devel
+BuildRequires:	libtiff-devel
+BuildRequires:	libzip-devel
+%{?with_gtk2:BuildRequires:	pkgconfig}
+BuildRequires:	xar-devel
+BuildRequires:	xorg-lib-libXpm-devel
+BuildRequires:	xorg-lib-libXxf86vm-devel
+BuildRequires:	zlib-devel
+Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_confdir	/etc/%{pname}
-%define		_libdirend	%{_libdir}/%{pname}
-%define		_icons		%{_datadir}/%{pname}/icons
-%define		_help		%{_datadir}/%{pname}/help
+%define		pname		endeavour2
+%define		pkgconfdir	/etc/%{pname}
+%define		pkglibdir	%{_libdir}/%{pname}
+%define		pkgdatadir	%{_libdir}/%{pname}
 
 %description
-endeavour file browser.
+Endeavour Mark II is a complete file management suite that comes with
+a file browser, image browser, archiver, recycled objects system, and
+a set of file and disk management utility programs.
 
 %description -l pl.UTF-8
-endeavour - przeglądarka plików.
+Endeavour Mark II to kompletne oprogramowanie do zarządzania plikami,
+zawierające przeglądarkę plików, przeglądarkę obrazów, archiwizer,
+system recyklingu oraz zbiór programów narzędziowych do zarządzania
+plikami i dyskami.
 
 %package libs
-Summary:	Endeavour2 library
-Summary(pl.UTF-8):	Bibloteka Endeavour2
-Group:		X11/Applications
+Summary:	Endeavour2 base library
+Summary(pl.UTF-8):	Bibloteka podstawowa Endeavour2
+Group:		Libraries
 
 %description libs
-Endeavour2 library.
+Endeavour2 base library.
 
 %description libs -l pl.UTF-8
-Biblioteka Endeavour2.
+Biblioteka podstawowa Endeavour2.
 
 %package devel
 Summary:	Header files for endeavour2
 Summary(pl.UTF-8):	Pliki nagłówkowe endeavour2
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	glib-devel >= 1.2
+Requires:	libstdc++-devel
 
 %description devel
 Endeavour2 header files.
@@ -63,46 +89,66 @@ Pliki nagłówkowe Endeavour2.
 %prep
 %setup -q -a1
 %patch0 -p1
-%if %{with polish}
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%if %{with polish}
+%patch6 -p1
 %endif
 
 %build
 ./configure \
-	PLD
+	Linux
 
 %{__make} \
 	CC="%{__cc}"			\
 	CPP="%{__cxx}"			\
 	OPTCFLAGS="%{rpmcflags} -fPIC"	\
-	EDV_LIB_DIR=%{_libdir}		\
-	LIB_DIRS=
+	EDV_LIB_DIR=%{_libdir}
+#	LIB_DIRS=
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d \
-	$RPM_BUILD_ROOT{%{_confdir},%{_libdirend},%{_bindir}} \
-	$RPM_BUILD_ROOT{%{_icons},%{_mandir}/man1,%{_help}} \
-	$RPM_BUILD_ROOT%{_includedir}/%{pname}
+install -d $RPM_BUILD_ROOT%{pkgconfdir}
 
-# add xpm icons for OO type
-install icons/{ooo_calc.xpm,ooo_impress.xpm,ooo_writer.xpm,sdc.xpm,sdw.xpm} $RPM_BUILD_ROOT%{_icons}
-# instalation from package is ugly so I decide to put files by my self
-cd endeavour2
-install %{pname} $RPM_BUILD_ROOT%{_bindir}
-install download.front/download.front $RPM_BUILD_ROOT%{_libdirend}
-install fsck.front/fsck.front $RPM_BUILD_ROOT%{_libdirend}
-install format.front/format.front $RPM_BUILD_ROOT%{_libdirend}
-install images/* $RPM_BUILD_ROOT%{_icons}
-install data/help/* $RPM_BUILD_ROOT%{_help}
-bzip2 -dc endeavour2.1.bz2 > $RPM_BUILD_ROOT%{_mandir}/man1/endeavour2.1
-# devel
-install lib/*.h $RPM_BUILD_ROOT%{_includedir}/%{pname}
-install lib/libendeavour2.so $RPM_BUILD_ROOT%{_libdir}
-install lib/endeavour2-config $RPM_BUILD_ROOT%{_bindir}
+#install -d \
+#	$RPM_BUILD_ROOT{%{pkgconfdir},%{pkglibdir},%{pkgdatadir}/{help,icons}} \
+#	$RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_includedir}/%{pname}}
+
+%{__make} install \
+	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
+	EDV_ARCHDEP_DIR=$RPM_BUILD_ROOT%{pkglibdir} \
+	EDV_LIB_DIR=$RPM_BUILD_ROOT%{_libdir} \
+	MAN_DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
+	MAN1_DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
+	MAN3_DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
+	ICONS_DIR=$RPM_BUILD_ROOT%{_pixmapsdir} \
+	INSTBINFLAGS="-m755" \
+	INSTLIBFLAGS="-m755" \
+	LDCONFIG=:
+	
+## add xpm icons for OO type
+#install icons/{ooo_calc.xpm,ooo_impress.xpm,ooo_writer.xpm,sdc.xpm,sdw.xpm} $RPM_BUILD_ROOT%{pkgdatadir}/icons
+## instalation from package is ugly so I decide to put files by my self
+#cd endeavour2
+#install %{pname} $RPM_BUILD_ROOT%{_bindir}
+#install download.front/download.front $RPM_BUILD_ROOT%{pkglibdir}
+#install fsck.front/fsck.front $RPM_BUILD_ROOT%{pkglibdir}
+#install format.front/format.front $RPM_BUILD_ROOT%{pkglibdir}
+#install images/* $RPM_BUILD_ROOT%{pkgdatadir}/icons
+#install data/help/* $RPM_BUILD_ROOT%{pkgdatadir}/help
+#bzip2 -dc endeavour2.1.bz2 > $RPM_BUILD_ROOT%{_mandir}/man1/endeavour2.1
+## devel
+#install lib/*.h $RPM_BUILD_ROOT%{_includedir}/%{pname}
+#install lib/libendeavour2.so $RPM_BUILD_ROOT%{_libdir}
+#install lib/endeavour2-config $RPM_BUILD_ROOT%{_bindir}
+
+bzip2 -d $RPM_BUILD_ROOT%{_mandir}/man1/*.bz2
 
 # mime types by abram@
-install %{SOURCE2} $RPM_BUILD_ROOT%{_confdir}/mimetypes.ini
+install %{SOURCE2} $RPM_BUILD_ROOT%{pkgconfdir}/mimetypes.ini
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -113,20 +159,26 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS HACKING TODO LANGUAGE README
-%attr(755,root,root) %{_bindir}/%{pname}
-%attr(755,root,root) %{_libdirend}
-%{_mandir}/man1/*
-%dir %{_datadir}/%{pname}
-%{_icons}
-%{_help}
-%{_confdir}
+%attr(755,root,root) %{_bindir}/endeavour2
+%dir %{pkglibdir}
+%dir %{pkglibdir}/bin
+%attr(755,root,root) %{pkglibdir}/bin/*
+%{_datadir}/%{pname}
+%dir %{pkgconfdir}
+%config(noreplace) %verify(not md5 mtime size) %{pkgconfdir}/mimetypes.ini
+%{_pixmapsdir}/endeavour2*.xpm
+%{_mandir}/man1/endeavour2.1*
+%{_mandir}/man1/hedit.1*
+%{_mandir}/man1/sysinfo.endeavour2.1*
+%{_mandir}/man1/tedit.1*
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libendeavour2.so
+%attr(755,root,root) %{_libdir}/libendeavour2-base.so
 
 %files devel
 %defattr(644,root,root,755)
-%doc endeavour2/lib/INTERPS
-%attr(755,root,root) %{_bindir}/endeavour2-config
+%doc endeavour2/libendeavour2-base/INTERPS
+%attr(755,root,root) %{_bindir}/endeavour2-base-config
 %{_includedir}/%{pname}
+%{_mandir}/man1/endeavour2-base-config.1*

@@ -1,24 +1,16 @@
-diff -uNr endeavour-2.5.6.orig/endeavour2/config.h endeavour-2.5.6.pld/endeavour2/config.h
---- endeavour-2.5.6.orig/endeavour2/config.h	2005-10-07 09:01:48.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/config.h	2005-12-14 09:21:25.005740728 +0100
-@@ -343,13 +343,13 @@
+--- endeavour-3.1.4/endeavour2/config.h.orig	2014-02-02 19:38:07.061469313 +0100
++++ endeavour-3.1.4/endeavour2/config.h	2014-02-02 19:41:30.348127450 +0100
+@@ -431,8 +431,8 @@
+ # define EDV_PATH_PROG_DEF_TERMINAL	"x-terminal-emulator"
+ # define EDV_CMD_DEF_TERMINAL_RUN	"x-terminal-emulator -e"
+ #else
+-# define EDV_PATH_PROG_DEF_TERMINAL	"/usr/X11R6/bin/xterm"
+-# define EDV_CMD_DEF_TERMINAL_RUN	"/usr/X11R6/bin/xterm -e"
++# define EDV_PATH_PROG_DEF_TERMINAL	"/usr/bin/xterm"
++# define EDV_CMD_DEF_TERMINAL_RUN	"/usr/bin/xterm -e"
  #endif
  
- #define EDV_DEF_FORMAT_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/format.front"
-+ "/format.front"
- #define EDV_DEF_FSCK_FRONT_PROG		EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/fsck.front"
-+ "/fsck.front"
- #define EDV_DEF_ZIPTOOL_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/ziptool.front"
-+ "/ziptool.front"
- #define EDV_DEF_DOWNLOAD_FRONT_PROG	EDV_DEF_GLOBAL_ARCHDEP_DATA_DIR \
-- "/bin/download.front"
-+ "/download.front"
- #define EDV_DEF_MAIL_CLIENT_PROG	"/usr/bin/balsa"
- 
- 
+ #define EDV_PATH_PROG_DEF_FORMAT_FRONT	EDV_PATH_DEF_GLOBAL_LIB_DIR	\
 diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavour2/edvcore.c
 --- endeavour-2.5.6.orig/endeavour2/edv_core.c	2005-10-07 09:01:51.000000000 +0200
 +++ endeavour-2.5.6.pld/endeavour2/edv_core.c	2005-12-23 15:27:37.817417472 +0100
@@ -34,99 +26,132 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavou
  #else
  	EDV_SET_S(
  	    EDV_CFG_PARM_FILE_MIME_TYPES,
-diff -uNr endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c
---- endeavour-2.5.6.orig/endeavour2/lib/endeavour2-config.c	2005-10-07 09:01:45.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/lib/endeavour2-config.c	2005-12-22 14:55:50.856055776 +0100
-@@ -24,7 +24,7 @@
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/endeavour2-base-config.c.orig	2014-02-02 19:50:52.794770512 +0100
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/endeavour2-base-config.c	2014-02-02 19:50:55.814770386 +0100
+@@ -8,7 +8,7 @@
+ #include <string.h>
+ #include "config.h"
  
+-#define CFLAGS			"-I/usr/lib/endeavour2/include"
++#define CFLAGS			"-I/usr/include/endeavour2"
  
- #define CFLAGS	"\
---I/usr/lib/endeavour2/include"
-+-I/usr/include/endeavour2"
+ #define LIBS			"-lendeavour2-base"
  
- #define LIBS	"\
- -lendeavour2"
-diff -uNr endeavour-2.5.6.orig/endeavour2/lib/Makefile endeavour-2.5.6.pld/endeavour2/lib/Makefile
---- endeavour-2.5.6.orig/endeavour2/lib/Makefile	2005-10-07 09:01:45.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/lib/Makefile	2005-12-22 14:25:24.112762968 +0100
-@@ -70,8 +70,8 @@
- BIN_DIR         = $(PREFIX)/bin
- LIB_DIR         = $(PREFIX)/lib
- EDV_ARCH_DIR    = $(PREFIX)/lib/endeavour2
--EDV_INCLUDE_DIR = $(PREFIX)/lib/endeavour2/include
--EDV_LIB_DIR     = $(PREFIX)/lib/endeavour2/lib
-+EDV_INCLUDE_DIR = $(PREFIX)/include/endeavour2/
-+EDV_LIB_DIR     = $(PREFIX)/lib/
- 
- 
- # Compile time information export:
-diff -uNr endeavour-2.5.6.orig/endeavour2/platforms.ini endeavour-2.5.6.pld/endeavour2/platforms.ini
---- endeavour-2.5.6.orig/endeavour2/platforms.ini	2005-10-07 09:02:02.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/platforms.ini	2005-12-23 12:04:27.893567576 +0100
-@@ -285,6 +285,66 @@
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile.orig	2014-02-02 19:55:48.408091441 +0100
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile	2014-02-02 20:09:25.538057149 +0100
+@@ -6,8 +6,8 @@
+ MAN1_DIR	= $(PREFIX)/man/man1
+ MAN3_DIR	= $(PREFIX)/man/man3
+ EDV_ARCH_DIR	= $(PREFIX)/lib/endeavour2
+-EDV_INCLUDE_DIR	= $(PREFIX)/lib/endeavour2/include
+-EDV_LIB_DIR	= $(PREFIX)/lib/endeavour2/lib
++EDV_INCLUDE_DIR	= $(PREFIX)/include/endeavour2
++EDV_LIB_DIR	= $(LIB_DIR)
+ LIB		= libendeavour2-base.so
+ LIB_CFG_BIN	= endeavour2-base-config
+ LIB_CFG_MAN	= endeavour2-base-config.1.bz2
+--- endeavour-3.1.4/endeavour2/platforms.ini.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/platforms.ini	2014-02-04 16:46:12.354650452 +0100
+@@ -410,20 +410,14 @@
+ Platform = Linux
+ 	Description = For most any Linux system
+ 	PREFIX = /usr
+-	CFLAGS = -Wall -O2 -DNEED_STRCASESTR
++	CFLAGS = $(OPTCFLAGS) -Wall
+ 	LIBS = -lendeavour2-base -lm
+ 	LIB_DIR = -L./libendeavour2-base
+ 	CC = cc
+ 	CPP = c++
+ 	PlatformSearchPathInclude = /usr/include
+-	PlatformSearchPathInclude = /usr/X11R6/include
+-	PlatformSearchPathInclude = /usr/local/include
+-	PlatformSearchPathInclude = /opt/gnome/include
+ 	PlatformSearchPathLib = /lib
+ 	PlatformSearchPathLib = /usr/lib
+-	PlatformSearchPathLib = /usr/X11R6/lib
+-	PlatformSearchPathLib = /usr/local/lib
+-	PlatformSearchPathLib = /opt/gnome/lib
+ 	PlatformSearchPathEtc = /etc
+ 	PlatformSearchPathEtc = /usr/etc
+ 	PlatformSearchPathEtc = /usr/local/etc
+@@ -432,45 +426,12 @@
+ 	PlatformSearchPathBin = /usr/X11R6/bin
+ 	PlatformSearchPathBin = /usr/local/bin
+ 	PlatformSearchPathBin = /usr/games
+-	PlatformSearchPathBin = /opt/gnome/bin
+ 	PlatformSearchPathData = /usr/share/icons
+ 	PlatformSearchPathData = /usr/share/games
+ 	PlatformFeature = debug
+ 		Description = Just adds -g to the CFLAGS for debugging
+ 		MustExist = No
+ 		FeatureCFLAGS = -g
+-	PlatformFeature = arch-i486
+-		Description = Adds -march=i486 for 486 specific optimizations
+-		MustExist = Preferred  
+-		FeatureCFLAGS = -march=i486
+-		FeatureDepend = i486
+-			DependType = Machine
+-			MustExist = Yes
+-			DependMachine = i486
+-	PlatformFeature = arch-i586
+-		Description = Adds -march=i586 for Pentium specific optimizations
+-		MustExist = Preferred
+-		FeatureCFLAGS = -march=i586
+-		FeatureDepend = i586
+-			DependType = Machine
+-			MustExist = Yes
+-			DependMachine = i586
+-	PlatformFeature = arch-i686
+-		Description = Adds -march=i686 for Pentium Pro specific optimizations
+-		MustExist = Preferred
+-		FeatureCFLAGS = -march=i686
+-		FeatureDepend = i686
+-			DependType = Machine
+-			MustExist = Yes
+-			DependMachine = i686
+-	PlatformFeature = arch-pentiumpro
+-		Description = Adds -march=pentiumpro for Pentium Pro specific optimizations
+-		MustExist = Preferred
+-		FeatureCFLAGS = -march=pentiumpro
+-		FeatureDepend = pentiumpro
+-			DependType = Machine
+-			MustExist = Yes
+-			DependMachine = pentiumpro
+         PlatformFeature = libz
+                 Description = GNU Z Compression/Decompression Library
+                 MustExist = Preffered
+@@ -591,7 +552,6 @@
+ 		MustExist = Preffered
+ 		FeatureCFLAGS = -DHAVE_LIBXPM
+ 		FeatureLIBS = -lXpm
+-		FeatureLIB_DIR = -L/usr/X11R6/lib/
+ 		FeatureDepend = libxpm-devel
+ 			DependType = Header
+ 			MustExist = Yes
+@@ -611,11 +571,10 @@
+                 MustExist = Preferred                  
+                 FeatureCFLAGS = -DHAVE_XF86_VIDMODE
+                 FeatureLIBS = -lXxf86vm
+-                FeatureLIB_DIR = -L/usr/X11R6/lib/
+                 FeatureDepend = xf86vidmode-lib
+                         DependType = Library
+                         MustExist = Yes
+-                        DependPath = libXxf86vm.a
++                        DependPath = libXxf86vm.so
+                         DependGrepString = XF86VidModeQueryExtension
+                 FeatureDepend = xf86vidmode-devel
+                         DependType = Header
+@@ -627,13 +586,11 @@
+ 		MustExist = Yes
+ 		FeatureCFLAGS = `gtk-config --cflags`
+ 		FeatureLIBS = `gtk-config --libs`
+-		FeatureLIB_DIR = -L/usr/X11R6/lib
+ 		FeatureDepend = gtk-devel
+ 			DependType = Program
  			MustExist = Yes
  			DependPath = gtk-config
  
-+# PLD/Linux
-+# autor Micha³ Abramowicz <abram at pld-linux.org>
-+# 14.12.2005
-+Platform = PLD
-+	Description = For PLD Linux (http://www.pld-linux.org)
-+	PREFIX = /usr
-+	CFLAGS = $(OPTCFLAGS)
-+	LIBS = -lm
-+	LIB_DIR =
-+	CC = gcc
-+	CPP = g++
-+	PlatformSearchPathInclude = /usr/include
-+	PlatformSearchPathInclude = /usr/X11R6/include
-+	PlatformSearchPathLib = /lib
-+	PlatformSearchPathLib = /usr/lib
-+	PlatformSearchPathLib = /usr/X11R6/lib
-+	PlatformSearchPathEtc = /etc
-+	PlatformSearchPathBin = /usr/bin
-+	PlatformSearchPathBin = /usr/X11R6/bin
-+	PlatformSearchPathData = /usr/share/icons
-+        PlatformFeature = libgif
-+                Description = Uncompressed GIF Library
-+                MustExist = Preffered
-+                FeatureCFLAGS = -DHAVE_LIBGIF
-+                FeatureLIBS = -lgif
-+                FeatureDepend = libgif-devel
-+                        DependType = Header
-+                        MustExist = Yes
-+                        DependPath = gif_lib.h
-+                        DependGrepString = DGifOpenFileName
-+        PlatformFeature = XF86VidMode
-+                Description = XF86 Video Mode extension
-+                MustExist = Preferred                  
-+                FeatureCFLAGS = -DHAVE_XF86_VIDMODE
-+                FeatureLIBS = -lXxf86vm
-+                FeatureLIB_DIR = -L/usr/X11R6/lib/
-+                FeatureDepend = xf86vidmode-devel
-+                        DependType = Header
-+                        MustExist = Yes
-+                        DependPath = X11/extensions/xf86vmode.h
-+                        DependGrepString = XF86VidModeQueryExtension
-+	PlatformFeature = Imlib
-+		Description = Image library
-+		MustExist = Preffered
-+		FeatureCFLAGS = `imlib-config --cflags` -DHAVE_IMLIB
-+		FeatureLIBS = `imlib-config --libs`
-+		FeatureDepend = Imlib-devel
-+			DependType = Program
-+			MustExist = Yes
-+			DependPath = imlib-config
-+	PlatformFeature = libgtk
-+		Description = GTK+ 1.2.x
-+		MustExist = Yes
-+		FeatureCFLAGS = `gtk-config --cflags`
-+		FeatureLIBS = `gtk-config --libs`
-+		FeatureLIB_DIR = -L/usr/X11R6/lib
-+		FeatureDepend = gtk-devel
-+			DependType = Program
-+			MustExist = Yes
-+			DependPath = gtk-config
- 
+-
  # Debian GNU/Linux
  #
+ # Author: Christoph Berg <cb@df7cb.de>

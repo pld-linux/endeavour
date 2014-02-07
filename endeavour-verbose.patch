@@ -1,0 +1,448 @@
+--- endeavour-3.1.4/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/Makefile	2014-02-03 19:44:06.784495022 +0100
+@@ -49,7 +49,7 @@
+ #
+ all config:
+ 	@for subdir in $(ALL_SRC_DIRS); do			\
+-            $(MAKE) -s -C $$subdir -f Makefile $@ || exit 1;	\
++            $(MAKE) -C $$subdir -f Makefile $@ || exit 1;	\
+         done
+ 	@echo "To install, type \"su\" (to gain root privileges)\
+ and then type \"make install\"."
+@@ -59,7 +59,7 @@
+ #
+ install:
+ 	@for subdir in $(ALL_SRC_DIRS); do			\
+-            $(MAKE) -s -C $$subdir -f Makefile $@ || exit 1;	\
++            $(MAKE) -C $$subdir -f Makefile $@ || exit 1;	\
+         done
+ 	@echo "Installation done."
+ 	@echo " "
+@@ -72,5 +72,5 @@
+ #
+ clean:
+ 	@for subdir in $(ALL_SRC_DIRS); do			\
+-            $(MAKE) -s -C $$subdir -f Makefile $@; 		\
++            $(MAKE) -C $$subdir -f Makefile $@; 		\
+         done
+--- endeavour-3.1.4/endeavour2/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/Makefile	2014-02-03 20:08:41.257766475 +0100
+@@ -55,11 +55,9 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): prebuild config modules postbuild
+@@ -69,9 +67,7 @@
+ 	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+-	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) -o $(BIN) $(LIB_DIRS) $(LIBS)
+-	@echo -n "   "
++	$(CPP) $(OBJ_C) $(OBJ_CPP) -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+ 
+ prebuild:
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile.orig	2014-02-03 18:58:04.214610957 +0100
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile	2014-02-03 20:13:18.457754842 +0100
+@@ -86,11 +86,9 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(LIB): prebuild config modules $(LIB_CFG_BIN) postbuild
+@@ -100,9 +98,7 @@
+ 	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+-	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) $(LIB_DIRS) $(LIBS) -shared -o $(LIB)
+-	@echo -n "   "
++	$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) $(LIB_DIRS) $(LIBS) -shared -o $(LIB)
+ 	@-$(LS) $(LSFLAGS) $(LIB)
+ 
+ prebuild:
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile.orig	2014-02-06 21:12:31.496728142 +0100
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile	2014-02-07 15:17:50.273995367 +0100
+@@ -95,7 +95,7 @@
+ 
+ config:
+ 	@echo "Compiling resources"
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) $(LIB_DIRS) $(LIBS) -shared -o $(LIB)
+@@ -109,7 +109,7 @@
+ 
+ $(LIB_CFG_BIN):
+ 	@echo -n "Compiling configuration program..."
+-	@$(CC) -O2 -g -Wall $(LIB_CFG_BIN).c \
++	$(CC) -O2 -g -Wall $(LIB_CFG_BIN).c \
+ 	-o $(LIB_CFG_BIN)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(LIB_CFG_BIN)
+--- endeavour-3.1.4/endeavour2/Makefile.orig	2014-02-06 21:12:31.496728142 +0100
++++ endeavour-3.1.4/endeavour2/Makefile	2014-02-07 15:18:35.210660148 +0100
+@@ -64,7 +64,7 @@
+ 
+ config:
+ 	@echo "Compiling resources"
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	$(CPP) $(OBJ_C) $(OBJ_CPP) -o $(BIN) $(LIB_DIRS) $(LIBS)
+--- endeavour-3.1.4/endeavour2/download.front/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/download.front/Makefile	2014-02-07 16:11:35.817193336 +0100
+@@ -63,21 +63,19 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): config prebuild modules postbuild
+ 
+ config:
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) \
++	$(CPP) $(OBJ_C) $(OBJ_CPP) \
+         -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+--- endeavour-3.1.4/endeavour2/format.front/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/format.front/Makefile	2014-02-07 16:12:08.927191946 +0100
+@@ -63,21 +63,19 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): config prebuild modules postbuild
+ 
+ config:
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
++	$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
+         -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+--- endeavour-3.1.4/endeavour2/fsck.front/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/fsck.front/Makefile	2014-02-07 16:12:48.077190303 +0100
+@@ -63,21 +63,19 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): config prebuild modules postbuild
+ 
+ config:
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
++	$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
+         -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+--- endeavour-3.1.4/endeavour2/hedit/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/hedit/Makefile	2014-02-07 16:13:18.860522345 +0100
+@@ -63,21 +63,19 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): config prebuild modules postbuild
+ 
+ config:
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
++	$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
+         -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+--- endeavour-3.1.4/endeavour2/sysinfo/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/sysinfo/Makefile	2014-02-07 16:13:42.900521336 +0100
+@@ -62,21 +62,19 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): config prebuild modules postbuild
+ 
+ config:
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) \
++	$(CPP) $(OBJ_C) $(OBJ_CPP) \
+         -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+--- endeavour-3.1.4/endeavour2/tedit/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/tedit/Makefile	2014-02-07 16:14:10.183853524 +0100
+@@ -64,21 +64,19 @@
+ OBJ_C	= $(SRC_C:.c=.o)
+ OBJ_CPP	= $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): config prebuild modules postbuild
+ 
+ config:
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
++	$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
+         -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+--- endeavour-3.1.4/endeavour2/ziptool.front/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/ziptool.front/Makefile	2014-02-07 16:15:36.167183249 +0100
+@@ -63,21 +63,19 @@
+ OBJ_C   = $(SRC_C:.c=.o)
+ OBJ_CPP = $(SRC_CPP:.cpp=.o)
+ .c.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
++	$(CC) -c $*.c $(INC_DIRS) $(CFLAGS)
+ .cpp.o:
+-	@echo "Compiling module $*.o"
+-	@+$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
++	$(CPP) -c $*.cpp $(INC_DIRS) $(CFLAGS) $(CPPFLAGS)
+ 
+ 
+ $(BIN): config prebuild modules postbuild
+ 
+ config:
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ modules: $(OBJ_C) $(OBJ_CPP)
+ 	@echo -n "Linking modules..."
+-	@$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
++	$(CPP) $(OBJ_C) $(OBJ_CPP) $(OBJ_SO) \
+         -o $(BIN) $(LIB_DIRS) $(LIBS)
+ 	@echo -n "   "
+ 	@-$(LS) $(LSFLAGS) $(BIN)
+--- endeavour-3.1.4/endeavour2/utils/Makefile.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/utils/Makefile	2014-02-07 16:17:13.900512481 +0100
+@@ -104,113 +104,97 @@
+ 
+ config:
+ 	@echo "Compiling resources"
+-	@$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
++	$(EXPORT_COMPILETIMEINFO_H) > compiletimeinfo.h
+ 
+ directory-statistics:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ dnd-drag-maker:
+-	@echo "Compiling $(@)"
+-	@$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
+-	@$(CPP) $(LIBS_GTK) $(@).o				\
++	$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
++	$(CPP) $(LIBS_GTK) $(@).o				\
+         ../guiutils.o						\
+         ../hview.o ../hviewcb.o					\
+         -o $(@)
+ 
+ dnd-drop-reader:
+-	@echo "Compiling $(@)"
+-	@$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
+-	@$(CPP) $(LIBS_GTK) $(@).o				\
++	$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
++	$(CPP) $(LIBS_GTK) $(@).o				\
+         ../guiutils.o						\
+         ../hview.o ../hviewcb.o					\
+         -o $(@)
+ 
+ file-selector:
+-	@echo "Compiling $(@)"
+-	@$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
+-	@$(CPP) $(LIBS_GTK) $(@).o				\
++	$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
++	$(CPP) $(LIBS_GTK) $(@).o				\
+         ../fb.o							\
+ 	../cdialog.o ../guiutils.o ../fprompt.o ../pulist.o	\
+         ../string.o ../disk.o ../fio.o				\
+         -o $(@)
+ 
+ memory-usage-estimator:
+-	@echo "Compiling $(@)"
+-	@$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
+-	@$(CPP) $(LIBS_GTK) $(@).o				\
++	$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
++	$(CPP) $(LIBS_GTK) $(@).o				\
+         ../guiutils.o						\
+         -o $(@)
+ 
+ message-dialog:
+-	@echo "Compiling $(@)"
+-	@$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
+-	@$(CPP) $(LIBS_GTK) $(@).o				\
++	$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
++	$(CPP) $(LIBS_GTK) $(@).o				\
+ 	../guiutils.o ../cdialog.o ../string.o			\
+         -o $(@)
+ 
+ mls:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ notify:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ open:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ properties:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ purge:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ recover:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ recycle:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ rls:
+-	@echo "Compiling $(@)"
+-	@$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
++	$(CC) $(CFLAGS) $(CFLAGS_EDV2) $(LIBS_EDV2)		\
+         $(@).c							\
+         -o $(@)
+ 
+ splash:
+-	@echo "Compiling $(@)"
+-	@$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
+-	@$(CPP) $(LIBS_GTK) $(@).o				\
++	$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
++	$(CPP) $(LIBS_GTK) $(@).o				\
+         ../guiutils.o ../guirgbimg.o				\
+         ../splash.o						\
+         -o $(@)
+ 
+ style-editor:
+-	@echo "Compiling $(@)"
+-	@$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
+-	@$(CPP) $(LIBS_GTK) $(@).o				\
++	$(CC) -c $(CFLAGS) $(CFLAGS_GTK) $(@).c
++	$(CPP) $(LIBS_GTK) $(@).o				\
+         ../guiutils.o ../cdialog.o ../fprompt.o ../pulist.o	\
+         ../fb.o ../csd.o ../fsd.o ../style_edit.o		\
+         ../string.o ../fio.o ../disk.o				\

@@ -1,0 +1,11 @@
+--- endeavour-3.1.4/endeavour2/imgio_mng.c.orig	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/imgio_mng.c	2014-02-04 21:41:25.790573757 +0100
+@@ -1,6 +1,8 @@
+ #ifdef HAVE_LIBMNG
++#define MNG_USE_SO
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <time.h>
+ #include <errno.h>
+ #include <sys/types.h>
+ #include <sys/time.h>
