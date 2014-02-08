@@ -106,21 +106,20 @@ Pliki nagłówkowe Endeavour2.
 	CC="%{__cc}"			\
 	CPP="%{__cxx}"			\
 	OPTCFLAGS="%{rpmcflags} -fPIC"	\
+	EDV_BIN_DIR=%{pkglibdir}/bin    \
 	EDV_LIB_DIR=%{_libdir}
-#	LIB_DIRS=
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{pkgconfdir}
 
-#install -d \
-#	$RPM_BUILD_ROOT{%{pkgconfdir},%{pkglibdir},%{pkgdatadir}/{help,icons}} \
-#	$RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_includedir}/%{pname}}
-
-%{__make} install \
+%{__make} -j1 install \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
+	EDV_ARCH_DIR=$RPM_BUILD_ROOT%{pkglibdir} \
 	EDV_ARCHDEP_DIR=$RPM_BUILD_ROOT%{pkglibdir} \
+	EDV_BIN_DIR=$RPM_BUILD_ROOT%{pkglibdir}/bin \
 	EDV_LIB_DIR=$RPM_BUILD_ROOT%{_libdir} \
+	LIB_DIR=$RPM_BUILD_ROOT%{_libdir} \
 	MAN_DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
 	MAN1_DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
 	MAN3_DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
@@ -129,22 +128,6 @@ install -d $RPM_BUILD_ROOT%{pkgconfdir}
 	INSTLIBFLAGS="-m755" \
 	LDCONFIG=:
 	
-## add xpm icons for OO type
-#install icons/{ooo_calc.xpm,ooo_impress.xpm,ooo_writer.xpm,sdc.xpm,sdw.xpm} $RPM_BUILD_ROOT%{pkgdatadir}/icons
-## instalation from package is ugly so I decide to put files by my self
-#cd endeavour2
-#install %{pname} $RPM_BUILD_ROOT%{_bindir}
-#install download.front/download.front $RPM_BUILD_ROOT%{pkglibdir}
-#install fsck.front/fsck.front $RPM_BUILD_ROOT%{pkglibdir}
-#install format.front/format.front $RPM_BUILD_ROOT%{pkglibdir}
-#install images/* $RPM_BUILD_ROOT%{pkgdatadir}/icons
-#install data/help/* $RPM_BUILD_ROOT%{pkgdatadir}/help
-#bzip2 -dc endeavour2.1.bz2 > $RPM_BUILD_ROOT%{_mandir}/man1/endeavour2.1
-## devel
-#install lib/*.h $RPM_BUILD_ROOT%{_includedir}/%{pname}
-#install lib/libendeavour2.so $RPM_BUILD_ROOT%{_libdir}
-#install lib/endeavour2-config $RPM_BUILD_ROOT%{_bindir}
-
 bzip2 -d $RPM_BUILD_ROOT%{_mandir}/man1/*.bz2
 
 # mime types by abram@
