@@ -1,0 +1,56 @@
+--- endeavour-3.1.4/endeavour2/imgio_gif.c~	2014-11-10 08:41:48.000000000 +0100
++++ endeavour-3.1.4/endeavour2/imgio_gif.c	2014-11-10 08:43:54.590693857 +0100
+@@ -1465,7 +1465,7 @@
+  if(ctx != NULL) {				\
+   /* Close the GIF file */			\
+   if(ctx->gif_file != NULL)			\
+-   (void)DGifCloseFile(ctx->gif_file);		\
++   (void)DGifCloseFile(ctx->gif_file, NULL);	\
+ 						\
+   /* Delete the GIF screen */			\
+   if(ctx->gif_screen != NULL) {			\
+@@ -1762,7 +1762,7 @@
+ 	}
+ 
+ 	/* End the GIF decoding */
+-	gif_status = DGifCloseFile(ctx->gif_file);
++	gif_status = DGifCloseFile(ctx->gif_file, NULL);
+ 	if(gif_status != GIF_OK)
+ 	{
+ 	    ImgOpenSetError(DGIF_STR_ERROR(ctx->gif_file->Error));
+@@ -1973,7 +1973,7 @@
+  if(ctx != NULL) {				\
+   /* Close the GIF file */			\
+   if(ctx->gif_file != NULL)			\
+-   (void)DGifCloseFile(ctx->gif_file);		\
++   (void)DGifCloseFile(ctx->gif_file, NULL);	\
+ 						\
+   /* Delete the GIF screen */			\
+   if(ctx->gif_screen != NULL) {			\
+@@ -2281,7 +2281,7 @@
+ 	}
+ 
+ 	/* End the GIF decoding */
+-	gif_status = DGifCloseFile(ctx->gif_file);
++	gif_status = DGifCloseFile(ctx->gif_file, NULL);
+ 	if(gif_status != GIF_OK)
+ 	{
+ 	    ImgOpenSetError(DGIF_STR_ERROR(ctx->gif_file->Error));
+@@ -3994,7 +3994,7 @@
+  if(ctx != NULL) {				\
+   /* Close the GIF file */			\
+   if(ctx->gif_file != NULL)			\
+-   (void)EGifCloseFile(ctx->gif_file);		\
++   (void)EGifCloseFile(ctx->gif_file, NULL);	\
+ 						\
+   free(ctx);					\
+  }						\
+@@ -4177,7 +4177,7 @@
+ 	}
+ 
+ 	/* End the GIF encoding */
+-	gif_status = EGifCloseFile(ctx->gif_file);
++	gif_status = EGifCloseFile(ctx->gif_file, NULL);
+ 	if(gif_status != GIF_OK)
+ 	{
+ 	    ImgSaveSetError(EGIF_STR_ERROR(ctx->gif_file->Error));

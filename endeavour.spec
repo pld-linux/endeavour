@@ -7,7 +7,7 @@ Summary:	Endeavour Mark II file management suite
 Summary(pl.UTF-8):	Oprogramowanie do zarządzania plikami Endeavour Mark II
 Name:		endeavour
 Version:	3.1.4
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://wolfsinger.com/~wolfpack/packages/%{name}-%{version}.tar.bz2
@@ -22,9 +22,10 @@ Patch3:		%{name}-verbose.patch
 Patch4:		%{name}-libmng.patch
 Patch5:		%{name}-libpng.patch
 Patch6:		%{name}-PLD-polish.patch
+Patch7:		%{name}-giflib51.patch
 URL:		http://freecode.com/projects/endeavour2
 BuildRequires:	bzip2-devel
-BuildRequires:	giflib-devel
+BuildRequires:	giflib-devel >= 5.1.0
 BuildRequires:	glib-devel >= 1.2
 %{!?with_gtk2:BuildRequires:	gtk+-devel >= 1.2}
 %{?with_gtk2:BuildRequires:	gtk+2-devel >= 2.0}
@@ -37,7 +38,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtar-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libzip-devel
-%{?with_gtk2:BuildRequires:	pkgconfig}
+BuildRequires:	pkgconfig
 BuildRequires:	xar-devel
 BuildRequires:	xorg-lib-libXpm-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
@@ -97,6 +98,7 @@ Pliki nagłówkowe Endeavour2.
 %if %{with polish}
 %patch6 -p1
 %endif
+%patch7 -p1
 
 %build
 ./configure \
@@ -105,7 +107,7 @@ Pliki nagłówkowe Endeavour2.
 %{__make} \
 	CC="%{__cc}"			\
 	CPP="%{__cxx}"			\
-	OPTCFLAGS="%{rpmcflags} -fPIC"	\
+	OPTCFLAGS="%{rpmcflags} -fPIC `pkg-config --cflags libzip`"	\
 	EDV_BIN_DIR=%{pkglibdir}/bin    \
 	EDV_LIB_DIR=%{_libdir}
 
