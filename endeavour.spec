@@ -7,7 +7,7 @@ Summary:	Endeavour Mark II file management suite
 Summary(pl.UTF-8):	Oprogramowanie do zarządzania plikami Endeavour Mark II
 Name:		endeavour
 Version:	3.1.4
-Release:	7
+Release:	8
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://wolfsinger.com/~wolfpack/packages/%{name}-%{version}.tar.bz2

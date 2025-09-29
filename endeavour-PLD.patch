@@ -1,6 +1,7 @@
---- endeavour-3.1.4/endeavour2/config.h.orig	2014-02-02 19:38:07.061469313 +0100
-+++ endeavour-3.1.4/endeavour2/config.h	2014-02-02 19:41:30.348127450 +0100
-@@ -431,8 +431,8 @@
+diff -urNp -x '*.orig' endeavour-3.1.4.org/endeavour2/config.h endeavour-3.1.4/endeavour2/config.h
+--- endeavour-3.1.4.org/endeavour2/config.h	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/config.h	2025-09-29 11:40:37.634363341 +0200
+@@ -431,8 +431,8 @@ to the fullest extent of the law.\n"
  # define EDV_PATH_PROG_DEF_TERMINAL	"x-terminal-emulator"
  # define EDV_CMD_DEF_TERMINAL_RUN	"x-terminal-emulator -e"
  #else
@@ -11,12 +12,12 @@
  #endif
  
  #define EDV_PATH_PROG_DEF_FORMAT_FRONT	EDV_PATH_DEF_GLOBAL_LIB_DIR	\
-diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavour2/edvcore.c
---- endeavour-2.5.6.orig/endeavour2/edv_core.c	2005-10-07 09:01:51.000000000 +0200
-+++ endeavour-2.5.6.pld/endeavour2/edv_core.c	2005-12-23 15:27:37.817417472 +0100
-@@ -194,6 +194,11 @@
- 	    EDV_CFG_PARM_FILE_MIME_TYPES,
- 	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
+diff -urNp -x '*.orig' endeavour-3.1.4.org/endeavour2/edv_core.c endeavour-3.1.4/endeavour2/edv_core.c
+--- endeavour-3.1.4.org/endeavour2/edv_core.c	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_core.c	2025-09-29 11:40:37.634810672 +0200
+@@ -827,6 +827,11 @@ static CfgList *edv_core_new_default_cfg
+ 		EDV_CFG_PARM_PRESENTATION_FONT,
+ 		EDV_GDK_FONT_NAME_12
  	);
 +#elif defined(PLD)
 +	EDV_SET_S(              
@@ -24,22 +25,12 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavou
 +	    PrefixPaths(global_config_dir, EDV_DEF_MIMETYPES_FILE)
 +	);
  #else
- 	EDV_SET_S(
- 	    EDV_CFG_PARM_FILE_MIME_TYPES,
---- endeavour-3.1.4/endeavour2/libendeavour2-base/endeavour2-base-config.c.orig	2014-02-02 19:50:52.794770512 +0100
-+++ endeavour-3.1.4/endeavour2/libendeavour2-base/endeavour2-base-config.c	2014-02-02 19:50:55.814770386 +0100
-@@ -8,7 +8,7 @@
- #include <string.h>
- #include "config.h"
- 
--#define CFLAGS			"-I/usr/lib/endeavour2/include"
-+#define CFLAGS			"-I/usr/include/endeavour2"
- 
- #define LIBS			"-lendeavour2-base"
- 
---- endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile.orig	2014-02-02 19:55:48.408091441 +0100
-+++ endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile	2014-02-02 20:09:25.538057149 +0100
-@@ -6,8 +6,8 @@
+ #warning "EDV_GDK_FONT_NAME_12 was not defined, fonts may not display correctly"
+ #endif
+diff -urNp -x '*.orig' endeavour-3.1.4.org/endeavour2/libendeavour2-base/Makefile endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile
+--- endeavour-3.1.4.org/endeavour2/libendeavour2-base/Makefile	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/Makefile	2025-09-29 11:40:37.635345565 +0200
+@@ -6,8 +6,8 @@ LIB_DIR		= $(PREFIX)/lib
  MAN1_DIR	= $(PREFIX)/man/man1
  MAN3_DIR	= $(PREFIX)/man/man3
  EDV_ARCH_DIR	= $(PREFIX)/lib/endeavour2
@@ -50,9 +41,22 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavou
  LIB		= libendeavour2-base.so
  LIB_CFG_BIN	= endeavour2-base-config
  LIB_CFG_MAN	= endeavour2-base-config.1.bz2
---- endeavour-3.1.4/endeavour2/platforms.ini.orig	2009-09-12 09:00:00.000000000 +0200
-+++ endeavour-3.1.4/endeavour2/platforms.ini	2014-02-04 16:46:12.354650452 +0100
-@@ -410,20 +410,14 @@
+diff -urNp -x '*.orig' endeavour-3.1.4.org/endeavour2/libendeavour2-base/endeavour2-base-config.c endeavour-3.1.4/endeavour2/libendeavour2-base/endeavour2-base-config.c
+--- endeavour-3.1.4.org/endeavour2/libendeavour2-base/endeavour2-base-config.c	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/endeavour2-base-config.c	2025-09-29 11:40:37.635212639 +0200
+@@ -8,7 +8,7 @@
+ #include <string.h>
+ #include "config.h"
+ 
+-#define CFLAGS			"-I/usr/lib/endeavour2/include"
++#define CFLAGS			"-I/usr/include/endeavour2"
+ 
+ #define LIBS			"-lendeavour2-base"
+ 
+diff -urNp -x '*.orig' endeavour-3.1.4.org/endeavour2/platforms.ini endeavour-3.1.4/endeavour2/platforms.ini
+--- endeavour-3.1.4.org/endeavour2/platforms.ini	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/platforms.ini	2025-09-29 11:40:37.635506554 +0200
+@@ -410,20 +410,14 @@ Platform = FreeBSD
  Platform = Linux
  	Description = For most any Linux system
  	PREFIX = /usr
@@ -74,7 +78,7 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavou
  	PlatformSearchPathEtc = /etc
  	PlatformSearchPathEtc = /usr/etc
  	PlatformSearchPathEtc = /usr/local/etc
-@@ -432,45 +426,12 @@
+@@ -432,45 +426,12 @@ Platform = Linux
  	PlatformSearchPathBin = /usr/X11R6/bin
  	PlatformSearchPathBin = /usr/local/bin
  	PlatformSearchPathBin = /usr/games
@@ -120,7 +124,7 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavou
          PlatformFeature = libz
                  Description = GNU Z Compression/Decompression Library
                  MustExist = Preffered
-@@ -591,7 +552,6 @@
+@@ -591,7 +552,6 @@ Platform = Linux
  		MustExist = Preffered
  		FeatureCFLAGS = -DHAVE_LIBXPM
  		FeatureLIBS = -lXpm
@@ -128,7 +132,7 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavou
  		FeatureDepend = libxpm-devel
  			DependType = Header
  			MustExist = Yes
-@@ -611,11 +571,10 @@
+@@ -611,11 +571,10 @@ Platform = Linux
                  MustExist = Preferred                  
                  FeatureCFLAGS = -DHAVE_XF86_VIDMODE
                  FeatureLIBS = -lXxf86vm
@@ -141,7 +145,7 @@ diff -uNr endeavour-2.5.6.orig/endeavour2/edvcore.c endeavour-2.5.6.pld/endeavou
                          DependGrepString = XF86VidModeQueryExtension
                  FeatureDepend = xf86vidmode-devel
                          DependType = Header
-@@ -627,13 +586,11 @@
+@@ -627,13 +586,11 @@ Platform = Linux
  		MustExist = Yes
  		FeatureCFLAGS = `gtk-config --cflags`
  		FeatureLIBS = `gtk-config --libs`

@@ -31,3 +31,334 @@
  							cfg_list,
  							s,
  							path,
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/edv_archive_obj.c.org	2025-09-29 11:42:43.859977420 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/edv_archive_obj.c	2025-09-29 11:42:51.603618723 +0200
+@@ -1,4 +1,6 @@
+ #include <glib.h>
++#include <unistd.h>
++#include <string.h>
+ 
+ #include "edv_types.h"
+ #include "edv_utils.h"
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/edv_mime_type_get.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/edv_mime_type_get.c	2025-09-29 11:44:29.645290340 +0200
+@@ -1,4 +1,6 @@
+ #include <glib.h>
++#include <string.h>
++
+ #include "edv_utils.h"
+ #include "edv_path.h"
+ #include "edv_property.h"
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/edv_obj_info_match.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/edv_obj_info_match.c	2025-09-29 11:44:59.688323634 +0200
+@@ -1,4 +1,5 @@
+ #include <glib.h>
++#include <string.h>
+ 
+ #include "edv_types.h"
+ #include "edv_utils.h"
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/edv_process.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/edv_process.c	2025-09-29 11:45:44.093563343 +0200
+@@ -12,6 +12,7 @@
+ #include <fcntl.h>
+ #include <glib.h>
+ #include <unistd.h>
++#include <stdlib.h>
+ 
+ #include "edv_process.h"
+ 
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/edv_recycled_obj.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/edv_recycled_obj.c	2025-09-29 11:46:30.567608902 +0200
+@@ -1,4 +1,5 @@
+ #include <glib.h>
++#include <string.h>
+ 
+ #include "edv_types.h"
+ #include "edv_property.h"
+--- endeavour-3.1.4/endeavour2/libendeavour2-base/edv_vfs_obj.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/libendeavour2-base/edv_vfs_obj.c	2025-09-29 11:46:59.262737557 +0200
+@@ -1,4 +1,5 @@
+ #include <errno.h>
++#include <string.h>
+ 
+ #include <glib.h>
+ 
+--- endeavour-3.1.4/endeavour2/archiver_dnd.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/archiver_dnd.c	2025-09-29 11:48:32.477305804 +0200
+@@ -1,5 +1,6 @@
+ #include <errno.h>
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "url.h"
+ 
+--- endeavour-3.1.4/endeavour2/con_msg.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/con_msg.c	2025-09-29 11:49:21.449557809 +0200
+@@ -5,6 +5,7 @@
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
++#include <sys/select.h>
+ #include <fcntl.h>
+ #include <gtk/gtk.h>
+ #include <gdk/gdkkeysyms.h>
+@@ -1483,7 +1484,7 @@ static gboolean ConMsgProcessDescriptor(
+ )
+ {
+ 	struct stat stat_buf;
+-        fd_set fd_set;
++        fd_set rfd_set;
+         struct timeval tv;
+ 	gint		i,
+ 			buf_len,
+@@ -1497,13 +1498,13 @@ static gboolean ConMsgProcessDescriptor(
+ 	    return(FALSE);
+ 
+ 	/* No data waiting to be read? */
+-	FD_ZERO(&fd_set);
+-	FD_SET((int)fd, &fd_set);
++	FD_ZERO(&rfd_set);
++	FD_SET((int)fd, &rfd_set);
+         tv.tv_sec = 0;
+         tv.tv_usec = 0;
+         if(select(
+ 	    (int)fd + 1,			/* Highest number descriptor + 1 */
+-	    &fd_set,				/* Read descriptor set */
++	    &rfd_set,				/* Read descriptor set */
+ 	    NULL,				/* No write descriptor set */
+ 	    NULL,				/* No exception descriptor set */
+             &tv
+--- endeavour-3.1.4/endeavour2/edv_archive_check.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_archive_check.c	2025-09-29 11:53:13.800903864 +0200
+@@ -1228,7 +1228,7 @@ static gint edv_archive_check_xar_iterat
+ 	CfgList *cfg_list = core->cfg_list;
+ 
+ 	/* Create a new X Archive property iterator */
+-	xar_iter = xar_iter_new(xar);
++	xar_iter = xar_iter_new();
+ 	if(xar_iter == 0)
+ 	{
+ 		edv_archive_check_set_error(
+@@ -1368,7 +1368,7 @@ static gint edv_archive_check_xar(
+ 	}
+ 
+ 	/* Create a new X Archive object iterator */
+-	i1 = xar_iter_new(xar);
++	i1 = xar_iter_new();
+ 	if(i1 == 0)
+ 	{
+ 		(void)xar_close(xar);
+--- endeavour-3.1.4/endeavour2/edv_archive_extract_xar.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_archive_extract_xar.c	2025-09-29 11:53:39.955855507 +0200
+@@ -438,7 +438,7 @@ From:\n\
+ 		/* Create an X Archive iterator and find this object in
+ 		 * the X Archive
+ 		 */
+-		i1 = xar_iter_new(xar);
++		i1 = xar_iter_new();
+ 		if(i1 == 0)
+ 		{
+ 			core->last_error_ptr =
+--- endeavour-3.1.4/endeavour2/edv_archive_obj_stat.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_archive_obj_stat.c	2025-09-29 11:54:12.267968948 +0200
+@@ -3457,7 +3457,7 @@ static EDVArchiveObject *edv_archive_obj
+ 	obj->path = STRDUP(path);
+ 
+ 	/* Create a new X Archive property iterator */
+-	xar_iter = xar_iter_new(xar);
++	xar_iter = xar_iter_new();
+ 	if(xar_iter == 0)
+ 	{
+ 		const gint error_code = (gint)errno;
+@@ -4016,7 +4016,7 @@ static EDVArchiveObject *edv_archive_obj
+ 		return(NULL);
+ 
+ 	/* Create a new X Archive object iterator */
+-	i1 = xar_iter_new(xar);
++	i1 = xar_iter_new();
+ 	if(i1 == 0)
+ 	{
+ 		const gint error_code = (gint)errno;
+@@ -5902,7 +5902,7 @@ static gint edv_archive_object_stat_list
+ 		return(-1);
+ 
+ 	/* Create a new X Archive object iterator */
+-	i1 = xar_iter_new(xar);
++	i1 = xar_iter_new();
+ 	if(i1 == 0)
+ 	{
+ 		(void)xar_close(xar);
+--- endeavour-3.1.4/endeavour2/edv_id3_field.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_id3_field.c	2025-09-29 11:54:47.835135441 +0200
+@@ -1,5 +1,6 @@
+ #include <errno.h>
+ #include <glib.h>
++#include <string.h>
+ 
+ #include "edv_id3.h"
+ 
+--- endeavour-3.1.4/endeavour2/edv_id3_tag_fio.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_id3_tag_fio.c	2025-09-29 11:55:46.905006843 +0200
+@@ -1,6 +1,7 @@
+ #include <stdio.h>
+ #include <errno.h>
+ #include <ctype.h>
++#include <string.h>
+ #ifdef HAVE_LIBID3TAG
+ # include <id3tag.h>
+ #endif
+--- endeavour-3.1.4/endeavour2/edv_interps_op.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_interps_op.c	2025-09-29 11:56:40.479313941 +0200
+@@ -1,5 +1,6 @@
+ #include <stdlib.h>
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "cfg.h"
+ 
+--- endeavour-3.1.4/endeavour2/edv_mpeg_audio.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_mpeg_audio.c	2025-09-29 11:57:08.119806948 +0200
+@@ -1,6 +1,7 @@
+ #include <stdio.h>
+ #include <errno.h>
+ #include <glib.h>
++#include <string.h>
+ 
+ #include "libendeavour2-base/edv_vfs_obj.h"
+ #include "libendeavour2-base/edv_vfs_obj_stat.h"
+--- endeavour-3.1.4/endeavour2/edv_obj_info_match.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_obj_info_match.c	2025-09-29 11:57:34.724045878 +0200
+@@ -1,4 +1,5 @@
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "edv_types.h"
+ #include "libendeavour2-base/edv_path.h"
+--- endeavour-3.1.4/endeavour2/edv_recycle_obj.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/edv_recycle_obj.c	2025-09-29 11:58:07.609367487 +0200
+@@ -1,5 +1,6 @@
+ #include <errno.h>
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "cfg.h"
+ 
+--- endeavour-3.1.4/endeavour2/image_browser_dnd.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/image_browser_dnd.c	2025-09-29 11:58:54.379102967 +0200
+@@ -1,4 +1,5 @@
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "url.h"
+ 
+--- endeavour-3.1.4/endeavour2/prop_page_details.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/prop_page_details.c	2025-09-29 12:00:32.424066495 +0200
+@@ -1,6 +1,7 @@
+ #include <stdlib.h>
+ #include <errno.h>
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "cfg.h"
+ 
+--- endeavour-3.1.4/endeavour2/prop_page_link.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/prop_page_link.c	2025-09-29 12:01:32.078703759 +0200
+@@ -1,5 +1,6 @@
+ #include <errno.h>
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "url.h"
+ #include "cfg.h"
+--- endeavour-3.1.4/endeavour2/recycle_bin_dnd.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/recycle_bin_dnd.c	2025-09-29 12:02:00.983254775 +0200
+@@ -1,5 +1,6 @@
+ #include <errno.h>
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "url.h"
+ 
+--- endeavour-3.1.4/endeavour2/rgba_to_cidx.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/rgba_to_cidx.c	2025-09-29 12:02:52.843164818 +0200
+@@ -1,6 +1,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <sys/types.h>
++#include <string.h>
+ #include "fsdither.h"
+ #include "rgba_to_cidx.h"
+ 
+--- endeavour-3.1.4/endeavour2/vfs_browser_dnd.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/vfs_browser_dnd.c	2025-09-29 12:03:25.662772148 +0200
+@@ -1,4 +1,5 @@
+ #include <gtk/gtk.h>
++#include <string.h>
+ 
+ #include "url.h"
+ 
+--- endeavour-3.1.4/endeavour2/sysinfo/si_cb.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/sysinfo/si_cb.c	2025-09-29 12:06:21.896386815 +0200
+@@ -1,5 +1,6 @@
+ #include <signal.h>
+ #include <gtk/gtk.h>
++#include <stdlib.h>
+ 
+ #include "si_cb.h"
+ #include "si_win.h"
+--- endeavour-3.1.4/endeavour2/image_browser_list.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/image_browser_list.c	2025-09-29 12:14:06.888456707 +0200
+@@ -4,6 +4,7 @@
+ #else
+ # include <fnmatch.h>
+ #endif
++#include <string.h>
+ #include <gtk/gtk.h>
+ 
+ #include "../include/string.h"
+--- endeavour-3.1.4/endeavour2/prop_page_general.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/prop_page_general.c	2025-09-29 12:14:42.238996298 +0200
+@@ -1,4 +1,5 @@
+ #include <errno.h>
++#include <string.h>
+ #include <gtk/gtk.h>
+ 
+ #include "cfg.h"
+--- endeavour-3.1.4/endeavour2/utils/dnd-drag-maker.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/utils/dnd-drag-maker.c	2025-09-29 12:15:28.383313614 +0200
+@@ -1,4 +1,5 @@
+ #include <gtk/gtk.h>
++#include <string.h>
+ #include "../hview.h"
+ #include "../images/icon_x_48x48.xpm"
+ 
+--- endeavour-3.1.4/endeavour2/utils/mls.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/utils/mls.c	2025-09-29 12:16:05.688646544 +0200
+@@ -7,6 +7,7 @@
+ #define _GNU_SOURCE				/* For FNM_CASEFOLD */
+ #include <fnmatch.h>				/* For fnmatch() */
+ #include <glib.h>
++#include <string.h>
+ #include <endeavour2.h>
+ #include "../config.h"
+ 
+--- endeavour-3.1.4/endeavour2/utils/recycle.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/utils/recycle.c	2025-09-29 12:16:32.858483067 +0200
+@@ -9,6 +9,7 @@
+ 
+ #include <errno.h>
+ #include <glib.h>
++#include <string.h>
+ #include <endeavour2.h>
+ #include "../config.h"
+ 
+--- endeavour-3.1.4/endeavour2/utils/rls.c~	2009-09-12 09:00:00.000000000 +0200
++++ endeavour-3.1.4/endeavour2/utils/rls.c	2025-09-29 12:17:44.532555809 +0200
+@@ -10,6 +10,7 @@
+ #include <stdlib.h>
+ #include <fnmatch.h>				/* For fnmatch() */
+ #include <glib.h>
++#include <string.h>
+ #include <endeavour2.h>
+ #include "../config.h"
+ 
